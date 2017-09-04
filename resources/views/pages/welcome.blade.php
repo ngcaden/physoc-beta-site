@@ -30,12 +30,18 @@
         &nbsp 
         </div> <!-- .col-md-6 -->
 
-        <div class='col-md-6'>            
-            <div class="card">
+        <div class='col-md-6' ng-app='eventApp'>            
+            <div class="card" ng-controller='ListCtrl as ctrl'>
                 <h3>Upcoming Events</h3>
                 <hr>
                 
-                
+                <div class="panel panel-default" ng-repeat='item in ctrl.items'>
+                    <div class="panel-heading" ng-bind='item.title'></div>
+                    <div class="panel-body">
+                        @{{item.time}}
+                        <strong>@{{item.location}}</strong>
+                    </div>
+                </div> 
                     
                 <div class="text-center">
                     <a href="/events"><button class="btn btn-primary" role="button">See All Events</button></a>    
@@ -51,25 +57,7 @@
 
 @section('javascript')
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script type='text/javascript'>
-angular.module('committee',[])
-  .controller('MainCtrl', [function() {
-      var self = this;
-      self.members = [
-          {position: 'President', name: 'Thomas Woolley'},
-          {position: 'Vice President', name: 'Hunain Nadeem'},
-          {position: 'Events Officer', name: 'William Richards'},
-          {position: 'Webmaster', name: 'Quang Nguyen', picture: '{{ URL::to('/') }}/images/committee/webmaster.jpg'},
-          {position: 'Publicity Officer', name: 'Timothy Marley'},
-          {position: 'Social Secretary', name: 'Joseff Davies'},
-          {position: 'Department Representative', name: 'Michaela Flegrova', picture: '{{ URL::to('/') }}/images/committee/dep-rep.jpg' },
-          {position: 'PG Department Representative', name: 'Lloyd James'},
-          {position: 'Careers and Sponsorship Officer', name: 'Nicholas Lee'},
-          {position: 'Education and Lecturers Officer', name: 'Jemima Graham'},
-      ];
-  }]);
-
-</script>
+<script src="/js/app/controllers/eventController.js"></script>
 @endsection
 
 {{--  @foreach($posts as $post)
