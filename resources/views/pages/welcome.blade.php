@@ -36,10 +36,9 @@
                 <hr>
                 
                 <div class="panel panel-default" ng-repeat='item in ctrl.items'>
-                    <div class="panel-heading" ng-bind='item.title'></div>
+                    <div class="panel-heading">@{{item.title}} <strong>@{{item.time}}</strong></div>
                     <div class="panel-body">
-                        @{{item.time}}
-                        <strong>@{{item.location}}</strong>
+                        @{{item.location}}
                     </div>
                 </div> 
                     
