@@ -6,7 +6,7 @@
     
     <div class='row'>
         <div class='col-md-6'>
-            <div class="card">   
+            <div class="card" id="welcome-column">   
                 
                 <div class="banner text-center">
                     <img src="{{ asset('images/banner_bahfest.png') }}"  style='width:100%;'>
@@ -31,7 +31,7 @@
         </div> <!-- .col-md-6 -->
 
         <div class='col-md-6' ng-app='eventApp'>            
-            <div class="card" ng-controller='ListCtrl as ctrl'>
+            <div class="card" ng-controller='ListCtrl as ctrl'  id="event-column">
                 <h3>Upcoming Events</h3>
                 <hr>
                 
