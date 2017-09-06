@@ -50,3 +50,7 @@ body {
     margin: auto;
     margin-bottom: 5px;
 }
+
+strong, a span {
+    color: black;
+}

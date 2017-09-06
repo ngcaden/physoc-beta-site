@@ -35,13 +35,33 @@
                 <h3>Upcoming Events</h3>
                 <hr>
                 
-                <div class="panel panel-default" ng-repeat='item in ctrl.items'>
-                    <div class="panel-heading">@{{item.title}} <strong>@{{item.time}}</strong></div>
+                    <div class="panel-group" ng-repeat="event in ctrl.events">
+                        <div class="panel" ng-class='ctrl.getEventClass(event)'>
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" href="#collapse@{{event.id}}">
+                                    <strong ng-bind='event.time'></strong> &nbsp <span ng-bind='event.title'></span>
+                                    <span class='pull-right badge' ng-bind='event.category'></span>
+                                </a>
+                            </div>
+                            
+                            <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
+                                <div class="panel-body">
+                                    Location: <span ng-bind='event.location'></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {{--  <div ng-repeat='event in ctrl.events' class="panel" ng-class='ctrl.getEventClass(event)'>
+                    <div class="panel-heading">
+                        @{{event.title}} 
+                        <strong>@{{event.time}}</strong>
+                    </div>
                     <div class="panel-body">
-                        @{{item.location}}
+                        @{{event.location}}
                     </div>
                 </div> 
-                    
+                      --}}
                 <div class="text-center">
                     <a href="/events"><button class="btn btn-primary" role="button">See All Events</button></a>    
                 </div>
