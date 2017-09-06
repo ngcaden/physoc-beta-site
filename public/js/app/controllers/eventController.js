@@ -30,16 +30,16 @@ angular.module('eventApp', [])
             {id: 3, title: 'Tri-union Takeover', time: '2017-11-24', location: 'The Union', category:'Social'},
             {id: 4, title: 'Reseach Frontiers: Plasma', time: '2017-11-17', location: 'Blackett LT1', category:'Research'},
             {id: 5, title: 'Pub Golf', time: '2017-10-14', location: 'The Union', category:'Social'},
-        //     {id: 6, title: 'Lab Tour', time: '2017-12-05', location: 'Mega Lab', category:'Lab Tour'},
-        //     {id: 7, title: 'Careers Fair', time: '2017-01-04', location: 'Blackett', category:'Careers'},
-        //     {id: 8, title: 'Tri-union Takeover', time: '2017-11-24', location: 'The Union', category:'Social'},
-        //     {id: 9, title: 'Reseach Frontiers: Plasma', time: '2017-11-17', location: 'Blackett LT1', category:'Research'},
-        //     {id: 10, title: 'Pub Golf', time: '2017-10-14', location: 'The Union', category:'Social'}
+            {id: 6, title: 'Lab Tour', time: '2017-12-05', location: 'Mega Lab', category:'Lab Tour'},
+            {id: 7, title: 'Careers Fair', time: '2017-01-04', location: 'Blackett', category:'Careers'},
+            {id: 8, title: 'Tri-union Takeover', time: '2017-11-24', location: 'The Union', category:'Social'},
+            {id: 9, title: 'Reseach Frontiers: Plasma', time: '2017-11-17', location: 'Blackett LT1', category:'Research'},
+            {id: 10, title: 'Pub Golf', time: '2017-10-14', location: 'The Union', category:'Social'}
         ];
 
         self.getEventClass = function(item) {
             if(item.category === 'Careers') {
-                return 'panel-default';
+                return 'panel-success';
             };
             if(item.category === 'Social') {
                 return 'panel-info';

@@ -34,13 +34,23 @@
             <div class="card" ng-controller='ListCtrl as ctrl'  id="event-column">
                 <h3>Upcoming Events</h3>
                 <hr>
-                
-                    <div class="panel-group" ng-repeat="event in ctrl.events">
-                        <div class="panel" ng-class='ctrl.getEventClass(event)'>
+                <div class='text-center'>
+                    <button class="btn btn-info" ng-click="myFilter = {category:'Social'}">Social</button>
+                    <button class="btn btn-success" ng-click="myFilter = {category:'Careers'}">Careers</button>
+                    <button class="btn btn-warning" ng-click="myFilter = {category:'Lab Tour'}">Lab Tour</button>
+                    <button class="btn btn-danger" ng-click="myFilter = {category:'Research'}">Research</button>
+                    <button class="btn btn-default" ng-click="myFilter = {}">All</button>
+                </div>
+                &nbsp 
+
+                <div class='well' style='height:65%;overflow:scroll;'>
+
+                    <div class="panel-group">
+                        <div ng-repeat="event in ctrl.events  | filter:myFilter" class="panel" ng-class='ctrl.getEventClass(event)'>
                             <div class="panel-heading">
                                 <a data-toggle="collapse" href="#collapse@{{event.id}}">
                                     <strong ng-bind='event.time'></strong> &nbsp <span ng-bind='event.title'></span>
-                                    <span class='pull-right badge' ng-bind='event.category'></span>
+                                    {{--  <span class='pull-right badge' ng-bind='event.category'></span>  --}}
                                 </a>
                             </div>
                             
@@ -51,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
                 {{--  <div ng-repeat='event in ctrl.events' class="panel" ng-class='ctrl.getEventClass(event)'>
                     <div class="panel-heading">
                         @{{event.title}} 
@@ -63,7 +73,7 @@
                 </div> 
                       --}}
                 <div class="text-center">
-                    <a href="/events"><button class="btn btn-primary" role="button">See All Events</button></a>    
+                    <a href="#"><button class="btn btn-primary" role="button">Show Past Events</button></a>    
                 </div>
 
                  
@@ -78,31 +88,3 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="/js/app/controllers/eventController.js"></script>
 @endsection
-
-{{--  @foreach($posts as $post)
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <a href="{{ url('events/'.$post->slug) }}">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-8">
-                                            {{ $post->title }} 
-                                        </div>
-
-                                        <div class="col-xs-2">
-                                            <strong>{{ \Carbon\Carbon::parse($post->time)->format('d M') }}</strong>
-                                        </div>
-
-                                        <div class="col-xs-2">
-                                            <span class="badge">{{ $post->category->name }}</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            <p>{{ substr(strip_tags($post->body), 0, 300) }}{{ strlen(strip_tags($post->body)) > 300 ? "...":"" }}</p>    
-                        </div>
-                    </div>
-
-                    &nbsp
-
-                @endforeach  --}}
