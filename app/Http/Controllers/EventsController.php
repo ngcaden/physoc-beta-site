@@ -9,7 +9,11 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware(['auth','admin'])->only('store','update','destroy');
+    }
+
     public function index() {
     
         $events = Post::where('date', '>=', Carbon::now())->join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->get();
@@ -55,5 +59,4 @@ class EventsController extends Controller
     public function destroy($id) {
         Post::destroy($id);
     }
-
 }

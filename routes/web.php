@@ -15,9 +15,7 @@
 Route::get('about', 'PagesController@getAbout');
 Route::get('sponsorship', 'PagesController@getSponsors');
 Route::get('/', 'PagesController@getIndex');
-
 Route::resource('posts', 'PostController');
-
 Route::resource('sponsors', 'SponsorController', ['except' => ['show']]);
 Route::resource('wikis', 'WikiController', ['except' => ['create']]);
 Route::resource('subjects', 'SubjectController', ['except' => ['create']]);
