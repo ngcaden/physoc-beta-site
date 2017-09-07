@@ -25,11 +25,28 @@ angular.module('eventApp', [])
         var self = this;
 
         self.events = [];
+        self.new_events = [];
+        
         $http.get('/api/events').then(function(response) {
-            self.events = response.data;
+            self.new_events = response.data;
+            self.events = self.new_events;
         }, function(errResponse) {
             console.error('Error while fetching notes');
         });
+
+        self.allEvents = function() {
+            console.log('Fetching notes');
+            $http.get('/api/events_all').then(function(response) {
+                self.events = response.data;
+            }, function(errResponse) {
+                console.error('Error while fetching notes');
+            });
+        };
+
+        self.hideAllEvents = function() {
+            
+            self.events = self.new_events;
+        };
 
         self.getEventClass = function(item) {
             if(item.category === 'Careers') {

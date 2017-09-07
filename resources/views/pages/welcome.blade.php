@@ -46,7 +46,7 @@
                 <div class='well' style='height:65%;overflow:scroll;'>
 
                     <div class="panel-group">
-                        <div ng-repeat="event in ctrl.events  | filter:myFilter" class="panel" ng-class='ctrl.getEventClass(event)'>
+                        <div ng-repeat="event in ctrl.events | filter:myFilter" class="panel" ng-class='ctrl.getEventClass(event)'>
                             <div class="panel-heading">
                                 <a data-toggle="collapse" href="#collapse@{{event.id}}">
                                     <strong ng-bind='event.date | date: "MMM dd"'></strong> &nbsp <span ng-bind='event.title'></span>
@@ -55,28 +55,20 @@
                             
                             <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
                                 <div class="panel-body">
-                                    <p ng-bind='event.body'></p>
+                                    <p ng-show='event.body' ng-bind='event.body'></p>
                                     <p><strong>Location:</strong> <span ng-bind='event.location'></span><br>
                                     <strong>Date:</strong> <span ng-bind='event.date | date: "mediumDate"'></span><br>
                                     <strong>Time:</strong> <span ng-bind='event.start'></span>-<span ng-bind='event.end'></span><br>
-                                    <strong>Event link:</strong> <a href="@{{event.link}}" ng-bind='event.link'></a></p>
+                                    <strong ng-show='event.link'>Event link:</strong> <a href="@{{event.link}}" ng-bind='event.link'></a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{--  <div ng-repeat='event in ctrl.events' class="panel" ng-class='ctrl.getEventClass(event)'>
-                    <div class="panel-heading">
-                        @{{event.title}} 
-                        <strong>@{{event.time}}</strong>
-                    </div>
-                    <div class="panel-body">
-                        @{{event.location}}
-                    </div>
-                </div> 
-                      --}}
+
                 <div class="text-center">
-                    <a href="#"><button class="btn btn-primary" role="button">Show Past Events</button></a>    
+                    <button class="btn btn-primary" ng-click='ctrl.allEvents()'>Show Past Events</button>  
+                    <button class="btn btn-primary" ng-click='ctrl.hideAllEvents()'>Hide Past Events</button>  
                 </div>
 
                  

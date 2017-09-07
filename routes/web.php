@@ -11,21 +11,20 @@
 |
 */
 
-// Route::get('events/{slug}', ['as' => 'events.single', 'uses' => 'EventsController@getSingle'])->where('slug', '[\w\d\-\_]+');
-// Route::get('events', ['as' => 'events.index', 'uses' => 'EventsController@getIndex']);
+// Pages
 Route::get('about', 'PagesController@getAbout');
 Route::get('sponsorship', 'PagesController@getSponsors');
 Route::get('/', 'PagesController@getIndex');
+
 Route::resource('posts', 'PostController');
+
 Route::resource('sponsors', 'SponsorController', ['except' => ['show']]);
-Route::resource('categories', 'CategoryController', ['except' => ['create']]);
 Route::resource('wikis', 'WikiController', ['except' => ['create']]);
 Route::resource('subjects', 'SubjectController', ['except' => ['create']]);
 Route::get('wikis/create/{year}', array('as' => 'wikis.create', 'uses' => 'WikiController@create'))->where('year', '[\d]+');
 Route::get('answers/create/{wiki_id}', array('as' => 'answers.create', 'uses' => 'AnswerController@create'))->where('wiki_id', '[\d]+');
 
-
-// Auth::routes();
+// Login
 Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
 Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
 Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);

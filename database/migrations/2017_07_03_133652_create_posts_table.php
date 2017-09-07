@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('date');
+            $table->date('date');
             $table->string('start');
             $table->string('end');
             $table->string('location');
@@ -28,7 +28,7 @@ class CreatePostsTable extends Migration
 
         DB::table('posts')->insert(array(
             'title' => 'Meet Physoc',
-            'date' => '05/10/2016',
+            'date' => '2016-10-05',
             'start' => '10:00',
             'end' => '12:00',
             'location' => 'Blackett',
@@ -38,7 +38,7 @@ class CreatePostsTable extends Migration
         
         DB::table('posts')->insert(array(
             'title' => 'Pub Golf',
-            'date' => '14/10/2016',
+            'date' => '2016-10-14',
             'start' => '19:00',
             'end' => '21:00',
             'location' => 'The Union',
@@ -47,18 +47,18 @@ class CreatePostsTable extends Migration
         ));
 
         DB::table('posts')->insert(array(
-            'title' => 'UCL/ICL do Science Museum Lates',
-            'date' => '26/10/2016',
+            'title' => 'UCL-ICL do Science Museum Lates',
+            'date' => '2016-10-26',
             'start' => '17:30',
             'end' => '22:00',
             'location' => 'Science Museum',
-            'body' => "UCL/Imperial joint social time! Meet at the Imperial College Union at 17:30 for a few warm up pints, then we'll head down to the Science Museum! It's a 5 minute stroll to get there and entry is free (Lates run from 18:30 - 22:00).",
+            'body' => "UCL-Imperial joint social time! Meet at the Imperial College Union at 17:30 for a few warm up pints, then we'll head down to the Science Museum! It's a 5 minute stroll to get there and entry is free (Lates run from 18:30 - 22:00).",
             'category_id' => '2'
         ));
 
         DB::table('posts')->insert(array(
             'title' => 'Research Frontiers: Quantum Optics & Laser Science Group',
-            'date' => '20/10/2016',
+            'date' => '2016-10-20',
             'start' => '17:00',
             'end' => '18:00',
             'location' => 'Blackett LT1',
@@ -68,7 +68,7 @@ class CreatePostsTable extends Migration
        
         DB::table('posts')->insert(array(
             'title' => 'NPL Trip',
-            'date' => '15/02/2016',
+            'date' => '2016-02-15',
             'start' => '12:00',
             'end' => '18:00',
             'location' => 'Teddington',
@@ -77,12 +77,22 @@ class CreatePostsTable extends Migration
         ));
 
         DB::table('posts')->insert(array(
-            'title' => 'NPL Trip',
-            'date' => '13/10/2016',
+            'title' => 'BP Careers Talk',
+            'date' => '2016-10-13',
             'start' => '13:00',
             'end' => '14:00',
             'location' => 'Room 509',
             'body' => "Light refreshments will be provided after the talk. Registration is not required, however please indicate interest on this event so that we can cater for refreshments accordingly.",
+            'category_id' => '1'
+        ));
+       
+        DB::table('posts')->insert(array(
+            'title' => "Fresher's Fair 2017",
+            'date' => '2017-10-03',
+            'start' => '09:00',
+            'end' => '15:00',
+            'location' => "Queen's Lawn",
+            'body' => "Opportunity to check out all clubs and societies at Imperial College.",
             'category_id' => '1'
         ));
         
