@@ -18,6 +18,11 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('categories')->insert(['name' => 'Careers']);
+        DB::table('categories')->insert(['name' => 'Social']);
+        DB::table('categories')->insert(['name' => 'Research']);
+        DB::table('categories')->insert(['name' => 'Lab Tour']);
     }
 
     /**

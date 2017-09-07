@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('events/{slug}', ['as' => 'events.single', 'uses' => 'EventsController@getSingle'])->where('slug', '[\w\d\-\_]+');
-Route::get('events', ['as' => 'events.index', 'uses' => 'EventsController@getIndex']);
+// Route::get('events/{slug}', ['as' => 'events.single', 'uses' => 'EventsController@getSingle'])->where('slug', '[\w\d\-\_]+');
+// Route::get('events', ['as' => 'events.index', 'uses' => 'EventsController@getIndex']);
 Route::get('about', 'PagesController@getAbout');
 Route::get('sponsorship', 'PagesController@getSponsors');
 Route::get('/', 'PagesController@getIndex');

@@ -21,19 +21,15 @@ $(window).resize(function() {
 
 // Angular Logic
 angular.module('eventApp', [])
-    .controller('ListCtrl', [function() {
+    .controller('ListCtrl', ['$http', function($http) {
         var self = this;
 
-        self.events = [
-            {id: 1, title: 'Meet Physoc',
-                date: '2017-10-05',
-                start: '12:00',
-                end: '14:00',
-                body: 'We begin the year with our annual Meet Physoc meeting. Everyone is welcome.',
-                location: 'Room 313, Blackett',
-                category:'Social',
-                link: 'physoc.co.uk'}
-            ];
+        self.events = [];
+        $http.get('/api/events').then(function(response) {
+            self.events = response.data;
+        }, function(errResponse) {
+            console.error('Error while fetching notes');
+        });
 
         self.getEventClass = function(item) {
             if(item.category === 'Careers') {
