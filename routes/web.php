@@ -23,3 +23,10 @@ Route::resource('wikis', 'WikiController', ['except' => ['create']]);
 Route::resource('subjects', 'SubjectController', ['except' => ['create']]);
 Route::get('wikis/create/{year}', array('as' => 'wikis.create', 'uses' => 'WikiController@create'))->where('year', '[\d]+');
 Route::get('answers/create/{wiki_id}', array('as' => 'answers.create', 'uses' => 'AnswerController@create'))->where('wiki_id', '[\d]+');
+
+
+// Auth::routes();
+Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+Route::get('/home', 'HomeController@index')->name('home');

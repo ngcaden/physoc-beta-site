@@ -17,6 +17,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'api', 'namespace' => 'Api'], function () { Route::resource('dogs', 'DogsController');});
-Route::get('dogs', function (Request $request) { echo $request->header('Accept');});
-

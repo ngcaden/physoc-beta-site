@@ -6,13 +6,18 @@
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
             <div class="card">    
-                <h3 class='text-center'>Sign in with your Imperial account to view this page</h3>
-
                 
-                <h1 class="text-center"><i class="fa fa-book" aria-hidden="true"></i> Welcome to the Imperial Physics Wiki!</h1>
+                <h1>Imperial Physics Wiki
+                    <span class='pull-right'>
+                        <form class="form-horizontal" method="POST" action="{{ route('logout') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-primary">
+                                Logout
+                            </button>
+                        </form>
+                    </span>
+                </h1>
                 <hr>
-                <h3>Choose your subject:</h3>
-                
                 <div class="container-fluid">	
                     <ul class="nav nav-tabs">
                         <li class="active"><a  href="#1" data-toggle="tab">Year 1</a>

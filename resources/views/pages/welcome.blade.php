@@ -49,14 +49,17 @@
                         <div ng-repeat="event in ctrl.events  | filter:myFilter" class="panel" ng-class='ctrl.getEventClass(event)'>
                             <div class="panel-heading">
                                 <a data-toggle="collapse" href="#collapse@{{event.id}}">
-                                    <strong ng-bind='event.time'></strong> &nbsp <span ng-bind='event.title'></span>
-                                    {{--  <span class='pull-right badge' ng-bind='event.category'></span>  --}}
+                                    <strong ng-bind='event.date | date: "MMM dd"'></strong> &nbsp <span ng-bind='event.title'></span>
                                 </a>
                             </div>
                             
                             <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
                                 <div class="panel-body">
-                                    Location: <span ng-bind='event.location'></span>
+                                    <p ng-bind='event.body'></p>
+                                    <p><strong>Location:</strong> <span ng-bind='event.location'></span><br>
+                                    <strong>Date:</strong> <span ng-bind='event.date | date: "mediumDate"'></span><br>
+                                    <strong>Time:</strong> <span ng-bind='event.start'></span>-<span ng-bind='event.end'></span><br>
+                                    <strong>Event link:</strong> <a href="@{{event.link}}" ng-bind='event.link'></a></p>
                                 </div>
                             </div>
                         </div>
