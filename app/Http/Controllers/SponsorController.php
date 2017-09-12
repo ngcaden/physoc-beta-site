@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Sponsor;
 use Image;
 use Session;
-use Illuminate\Support\Facades\Storage;
 
 class SponsorController extends Controller
 {
@@ -15,10 +15,12 @@ class SponsorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    public function index() 
     {
-        $sponsors = Sponsor::all();
-        return view('sponsors.index')->withSponsors($sponsors);
+            $sponsors = Sponsor::all();
+            return $sponsors;
     }
 
     /**

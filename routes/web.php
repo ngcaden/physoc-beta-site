@@ -16,7 +16,7 @@ Route::get('about', 'PagesController@getAbout');
 Route::get('sponsorship', 'PagesController@getSponsors');
 Route::get('/', 'PagesController@getIndex');
 Route::resource('posts', 'PostController');
-Route::resource('sponsors', 'SponsorController', ['except' => ['show']]);
+// Route::resource('sponsors', 'SponsorController', ['except' => ['show']]);
 Route::resource('wikis', 'WikiController', ['except' => ['create']]);
 Route::resource('subjects', 'SubjectController', ['except' => ['create']]);
 Route::get('wikis/create/{year}', array('as' => 'wikis.create', 'uses' => 'WikiController@create'))->where('year', '[\d]+');
@@ -26,4 +26,8 @@ Route::get('answers/create/{wiki_id}', array('as' => 'answers.create', 'uses' =>
 Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
 Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
 Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');

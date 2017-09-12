@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('events_all', 'EventsController@index_all');
 Route::resource('events', 'EventsController');
+Route::resource('sponsors', 'SponsorController');
+Route::resource('committee', 'CommitteeController');

@@ -11,8 +11,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "mews/purifier": "^2.0",
-        "nesbot/carbon": "^1.22",
-        "adldap2/adldap2-laravel": "3.0.*"
+        "nesbot/carbon": "^1.22"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

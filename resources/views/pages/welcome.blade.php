@@ -8,8 +8,8 @@
         <div class='col-md-6'>
             <div class="card" id="welcome-column">   
                 
-                <div class="banner text-center">
-                    <img src="{{ asset('images/banner_bahfest.png') }}"  style='width:100%;'>
+                <div class="text-center">
+                    <img src="/images/welcome-banner/freshers-fair-2017.jpg"  style='width:100%;'>
                 </div>
                 
                 &nbsp
@@ -20,7 +20,7 @@
                  
                 <hr>
 
-                <p class="text-justify">We run multiple events throughout the year, including lab tours and an annual physics. We also hold physics conferences and invite notable researchers for cutting-edge research during Research Frontier sessions. Furthermore, we run a number of social events to bring together the community of students who are interested in Physics.</p>
+                <p class="text-justify">We run multiple events throughout the year, including lab tours and annual physic trips. Every other week, we also hold Research Frontier conferences, during which invited researchers present their cutting-edge research in physics. Furthermore, we run lots of social events to bring together the Physics community at Imperial and beyond.</p>
                 &nbsp
                 <p class="text-center"><strong>We are currently looking for 2017/18 sponsors of all tiers.</strong></p>
                 
@@ -49,7 +49,7 @@
                         <div ng-repeat="event in ctrl.events | filter:myFilter" class="panel" ng-class='ctrl.getEventClass(event)'>
                             <div class="panel-heading">
                                 <a data-toggle="collapse" href="#collapse@{{event.id}}">
-                                    <strong ng-bind='event.date | date: "MMM dd"'></strong> &nbsp <span ng-bind='event.title'></span>
+                                    <strong ng-bind='event.date | date: "mediumDate"'></strong> &nbsp <span ng-bind='event.title'></span>
                                 </a>
                             </div>
                             
@@ -80,6 +80,5 @@
 
 
 @section('javascript')
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="/js/app/controllers/eventController.js"></script>
 @endsection

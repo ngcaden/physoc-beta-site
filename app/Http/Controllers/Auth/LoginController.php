@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Adldap\Laravel\Facades\Adldap;
 
 class LoginController extends Controller
 {
@@ -43,7 +42,7 @@ class LoginController extends Controller
 
 
     public function username() {
-        return config('adldap_auth.usernames.eloquent');
+        return 'username';
     }
 
     protected function validateLogin(Request $request) {

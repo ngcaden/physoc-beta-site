@@ -31,15 +31,15 @@ angular.module('eventApp', [])
             self.new_events = response.data;
             self.events = self.new_events;
         }, function(errResponse) {
-            console.error('Error while fetching notes');
+            console.error('Error while fetching events');
         });
 
         self.allEvents = function() {
-            console.log('Fetching notes');
+            console.log('Fetching events');
             $http.get('/api/events_all').then(function(response) {
                 self.events = response.data;
             }, function(errResponse) {
-                console.error('Error while fetching notes');
+                console.error('Error while fetching events');
             });
         };
 

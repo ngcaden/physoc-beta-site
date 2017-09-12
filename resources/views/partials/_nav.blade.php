@@ -2,7 +2,7 @@
     &nbsp
     <div class='row'>
         <div class='col-md-3 col-md-offset-1 text-center'>
-            <a href="/"><img src="{{ asset('images/logo_large-physoc.png') }}" style='max-width:250px;'></a>
+            <a href="/"><img src="/images/physoc-logo/logo_large-physoc.png" style='max-width:250px;'></a>
         </div>
 
         
@@ -36,7 +36,7 @@
                             <i class="fa fa-twitter" aria-hidden="true"></i>
                         </a>
                     </div>
-                </div> {{-- .row --}}
+                </div> <!-- .row -->
             </div>
         </div>
     </div>

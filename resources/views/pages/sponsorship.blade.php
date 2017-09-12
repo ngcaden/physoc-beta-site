@@ -22,20 +22,33 @@
                 &nbsp
                 <h4>Current Sponsors</h4>
                 <hr>
-                @foreach($sponsors as $sponsor)
-                            
-                            <div>
-                                <h3>{{ $sponsor->name }}</h3>
-                                
-                                <img src="{{ asset('logos' . $sponsor->logo) }}" height = "40" width = "80">
-                                <p>{{ $sponsor->description  }}</p>
-                                <a class="btn btn-primary" href="{{ url($sponsor->url) }}" role="button">Find Out More</a>
+                <div class='well' ng-app="sponsorApp">
+                    <div class="panel-group" ng-controller="ListCtrl as ctrl">
+                        <div ng-repeat="sponsor in ctrl.sponsors" class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong ng-bind='sponsor.name'></strong>
                             </div>
-
-                @endforeach
+                            
+                            <div class="panel-body">
+                                <div class='container-fluid'>
+                                        <img class='img-responsive' ng-src= "@{{ sponsor.logo }}">
+                                </div>
+                                &nbsp
+                                
+                                <p ng-show='sponsor.description' ng-bind='sponsor.description'></p>
+                                <strong ng-show='sponsor.url'>Sponsor URL:</strong> <a href="@{{sponsor.url}}" ng-bind='sponsor.url'></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+<script src="/js/app/controllers/sponsorController.js"></script>
+</script>
 @endsection
