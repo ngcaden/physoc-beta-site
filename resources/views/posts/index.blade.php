@@ -49,11 +49,24 @@
                             
                             <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
                                 <div class="panel-body">
-                                    <p ng-show='event.body' ng-bind='event.body'></p>
-                                    <p><strong>Location:</strong> <span ng-bind='event.location'></span><br>
-                                    <strong>Date:</strong> <span ng-bind='event.date | date: "mediumDate"'></span><br>
-                                    <strong>Time:</strong> <span ng-bind='event.start'></span>-<span ng-bind='event.end'></span><br>
-                                    <strong ng-show='event.link'>Event link:</strong> <a href="@{{event.link}}" ng-bind='event.link'></a></p>
+                                    <form>
+                                        <label for="body">Description:</label>
+                                        <textarea ng-show="event.body" ng-model="event.body" class="form-control" id="body"></textarea>
+
+                                        <label for="location">Location:</label> 
+                                        <input type='text' ng-model='event.location' id="location" class="form-control"></input>
+
+                                        <label for="date">Date:</label>
+                                        <input type='date' ng-model='event.date' id="date" class="form-control" placeholder="yyyy-MM-dd"></input>
+
+                                        <label for:"timestart">Time start:</label> 
+                                        <input type='number' ng-model='event.start' id="timestart" class="form-control"></input>
+                                        <label for:"timeend">Time start:</label> 
+                                        <input type='number' ng-model='event.end' id="timeend" class="form-control"></input>
+                                        
+                                        <label for:"link">Event link:</label> 
+                                        <input type='text'  ng-model='event.link' id="link" class="form-control"></input>
+                                    </form>    
                                 </div>
                             </div>
                         </div>
