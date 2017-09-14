@@ -49,7 +49,7 @@
                             
                             <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
                                 <div class="panel-body">
-                                    <form>
+                                    {{--  <form>
                                         <label for="body">Description:</label>
                                         <textarea ng-show="event.body" ng-model="event.body" class="form-control" id="body"></textarea>
 
@@ -57,16 +57,18 @@
                                         <input type='text' ng-model='event.location' id="location" class="form-control"></input>
 
                                         <label for="date">Date:</label>
-                                        <input type='date' ng-model='event.date' id="date" class="form-control" placeholder="yyyy-MM-dd"></input>
+                                        <input type="date" ng-model="event.date | date:'yyyy-MM-dd'" id="date" class="form-control" placeholder="yyyy-MM-dd" required></input>
 
                                         <label for:"timestart">Time start:</label> 
-                                        <input type='number' ng-model='event.start' id="timestart" class="form-control"></input>
+                                        <input ng-model='event.start' id="timestart" class="form-control" required></input>
                                         <label for:"timeend">Time start:</label> 
-                                        <input type='number' ng-model='event.end' id="timeend" class="form-control"></input>
+                                        <input ng-model='event.end' id="timeend" class="form-control" required></input>
                                         
                                         <label for:"link">Event link:</label> 
                                         <input type='text'  ng-model='event.link' id="link" class="form-control"></input>
-                                    </form>    
+                                    </form>      --}}
+                                    <button class="btn btn-danger btn-xs" ng-click="ctrl.deletePost(event.id)">Delete</button>
+
                                 </div>
                             </div>
                         </div>
@@ -80,6 +82,5 @@
 @endsection
 
 @section('javascript')
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="/js/app/controllers/postController.js"></script>
 @endsection

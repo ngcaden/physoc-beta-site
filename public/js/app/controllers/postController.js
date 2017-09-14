@@ -5,12 +5,6 @@ angular.module('postApp', [])
 
         self.events = [];
         
-        $http.get('/api/events_all').then(function(response) {
-            self.events = response.data;
-        }, function(errResponse) {
-            console.error('Error while fetching notes');
-        });
-
         self.getEventClass = function(item) {
             if(item.category === 'Careers') {
                 return 'panel-success';
@@ -24,6 +18,22 @@ angular.module('postApp', [])
             if(item.category === 'Lab Tour') {
                 return 'panel-warning';
             };
+        };
+
+        var fetchEvents = function() {
+            return $http.get('/api/events_all').then(function(response) {
+                    self.events = response.data;
+                    console.log(self.events);
+            }, function(errResponse) {
+                console.error('Error while fetching notes');
+            });
+        };
+    
+        fetchEvents();
+            
+        self.deletePost = function(index) {
+            $http.delete('/api/events/' + index)
+                .then(fetchEvents);
         };
     }]);
 

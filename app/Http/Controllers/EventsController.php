@@ -9,20 +9,20 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth','admin'])->only('store','update','destroy');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth','admin'])->only('store','update','destroy');
+    // }
 
     public function index() {
     
-        $events = Post::where('date', '>=', Carbon::now())->join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->get();
+        $events = Post::where('date', '>=', Carbon::now())->join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->select('posts.*','categories.category')->get();
         return $events;
     }
 
     public function index_all() {
         
-        $events = Post::join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->get();
+        $events = Post::join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->select('posts.*','categories.category')->get();
         return $events;
     }
 
@@ -57,6 +57,7 @@ class EventsController extends Controller
     * @return Response
     */
     public function destroy($id) {
-        Post::destroy($id);
+        $event = Post::find($id);
+        $event->delete();
     }
 }
