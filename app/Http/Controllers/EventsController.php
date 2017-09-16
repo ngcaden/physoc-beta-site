@@ -33,7 +33,7 @@ class EventsController extends Controller
     */
     public function store() {
         $event = Post::create(Request::all());
-        return $event;
+		return $event;
     }
 
     /**
@@ -57,7 +57,6 @@ class EventsController extends Controller
     * @return Response
     */
     public function destroy($id) {
-        $event = Post::find($id);
-        $event->delete();
+        Post::destroy($id);
     }
 }

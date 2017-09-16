@@ -4,15 +4,74 @@
 
 @section('content')
 
-<div class='row'>
+<div class='row' ng-app='postApp'>
     <div class="col-md-8 col-md-offset-2">
-        <div class="card" ng-app='postApp'>
+        <div class="card"ng-controller='ListCtrl as ctrl'>
             <h1>All Events</h1>
 
             <hr>
 
             <div class='row'>
-                {!! Html::linkRoute('posts.create', 'Create New', array(), array('class' => 'btn btn-lg btn-primary btn-block')) !!}
+
+                <form ng-submit="ctrl.newEvent()" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title" class="control-label col-sm-3">Title:</label> 
+                        <div class="col-sm-9">
+                            <input type='text' ng-model='ctrl.newevent.title' id="title" class="form-control" required></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date" class="control-label col-sm-3">Time:</label>
+                        <div class="col-sm-3">
+                            <input ng-model="ctrl.newevent.date" id="date" class="form-control" placeholder="yyyy-MM-dd" required></input>
+                        </div>
+                        <div class="col-sm-3">
+                            <input ng-model='ctrl.newevent.start' placeholder="Start Time" class="form-control" required></input>
+                        </div>
+                        <div class="col-sm-3">
+                            <input ng-model='ctrl.newevent.end' placeholder="End Time" class="form-control" required></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location" class="control-label col-sm-3" >Location:</label>
+                         
+                        <div class="col-md-9">
+                            <input type='text' ng-model='ctrl.newevent.location' id="location" class="form-control" required></input>
+                        </div>
+                    </div>
+                             
+                    <div class="form-group">
+                        <label for="body" class="control-label col-sm-3">Description:</label>
+                        <div class="col-md-9">
+                            <textarea ng-model="ctrl.newevent.body" class="form-control" rows="5" id="body"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="link" class="control-label col-sm-3">Event Link:</label>
+                        <div class="col-md-9">
+                            <input type='text'  ng-model='ctrl.newevent.link' id="link" class="form-control"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="control-label col-sm-3" >Category:</label>
+                         
+                        <div class="col-md-9">
+                            <input type='text' ng-model='ctrl.newevent.category' id="category" class="form-control" required></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group"> 
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <input type="submit" class="btn btn-primary" value="Add New Event">
+                        </div>
+                    </div>
+                    
+                </form>
+                
                 &nbsp
 
                 {{--  <div class='col-md-12'>
@@ -38,7 +97,7 @@
                         </tbody>
                     </table>
                 </div>  --}}
-                <div class='well' ng-controller='ListCtrl as ctrl'>
+                <div class='well'>
                     <div class="panel-group">
                         <div ng-repeat="event in ctrl.events" class="panel" ng-class='ctrl.getEventClass(event)'>
                             <div class="panel-heading">

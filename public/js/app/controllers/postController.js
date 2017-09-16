@@ -23,7 +23,6 @@ angular.module('postApp', [])
         var fetchEvents = function() {
             return $http.get('/api/events_all').then(function(response) {
                     self.events = response.data;
-                    console.log(self.events);
             }, function(errResponse) {
                 console.error('Error while fetching notes');
             });
@@ -34,6 +33,19 @@ angular.module('postApp', [])
         self.deletePost = function(index) {
             $http.delete('/api/events/' + index)
                 .then(fetchEvents);
+        };
+
+        self.newEvent = function() {
+            $http.post('/api/events', {
+                title: self.newevent.title,
+                date: self.newevent.date,
+                start: self.newevent.start,
+                end: self.newevent.end,
+                location: self.newevent.location,
+                body: self.newevent.body,
+                link: self.newevent.link,
+                category_id: self.newevent.category
+            }).then(fetchEvents);
         };
     }]);
 
