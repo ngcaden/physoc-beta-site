@@ -31,9 +31,8 @@ class EventsController extends Controller
     *
     * @return Response
     */
-    public function store() {
-        $event = Post::create(Request::all());
-		return $event;
+    public function store(Request $request) {
+        Post::create($request->all());
     }
 
     /**

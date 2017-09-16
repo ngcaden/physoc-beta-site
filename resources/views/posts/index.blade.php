@@ -104,6 +104,7 @@
                                 <a data-toggle="collapse" href="#collapse@{{event.id}}">
                                     <strong ng-bind='event.date | date: "MMM dd"'></strong> &nbsp <span ng-bind='event.title'></span>
                                 </a>
+                                <button type="button" class="pull-right btn btn-danger btn-xs" ng-click="ctrl.deletePost(event.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </div>
                             
                             <div id="collapse@{{event.id}}" class="panel-collapse collapse"> 
@@ -126,7 +127,7 @@
                                         <label for:"link">Event link:</label> 
                                         <input type='text'  ng-model='event.link' id="link" class="form-control"></input>
                                     </form>      --}}
-                                    <button class="btn btn-danger btn-xs" ng-click="ctrl.deletePost(event.id)">Delete</button>
+                                    
 
                                 </div>
                             </div>

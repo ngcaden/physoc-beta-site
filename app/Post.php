@@ -10,5 +10,5 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
-    protected $fillable = array('title', 'date', 'start', 'end', 'location', 'body', 'link', 'category_id');
+    protected $fillable = ['title', 'date', 'start', 'end', 'location', 'body', 'link', 'category_id'];
 }
