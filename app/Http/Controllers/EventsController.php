@@ -15,13 +15,11 @@ class EventsController extends Controller
     // }
 
     public function index() {
-    
         $events = Post::where('date', '>=', Carbon::now())->join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->select('posts.*','categories.category')->get();
         return $events;
     }
 
     public function index_all() {
-        
         $events = Post::join('categories', 'categories.id', '=', 'posts.category_id')->orderBy('date','DESC')->select('posts.*','categories.category')->get();
         return $events;
     }
@@ -32,6 +30,15 @@ class EventsController extends Controller
     * @return Response
     */
     public function store(Request $request) {
+        $this->validate($request, array(
+            'title' => 'required|max:64',
+            'date' => 'required|regex:/^[0-9\-]+$/|min:10|max:10',
+            'start' => 'required|regex:/^[0-9:]+$/|min:5|max:5',
+            'end' => 'required|regex:/^[0-9:]+$/|min:5|max:5',
+            'category_id' => 'required|numeric',
+            'location' => 'required|max:64',
+            'link' => 'sometimes|url'
+        ));
         Post::create($request->all());
     }
 

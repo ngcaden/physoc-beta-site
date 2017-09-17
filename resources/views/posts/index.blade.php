@@ -13,60 +13,111 @@
 
             <div class='row'>
 
-                <form ng-submit="ctrl.newEvent()" class="form-horizontal">
+                <form ng-submit="ctrl.newEvent()" class="form-horizontal" 
+                      name="eventForm" novalidate>
                     <div class="form-group">
-                        <label for="title" class="control-label col-sm-3">Title:</label> 
+                        <label for="title" class="control-label col-sm-3">* Title:</label> 
                         <div class="col-sm-9">
-                            <input type='text' ng-model='ctrl.newevent.title' id="title" class="form-control" required></input>
+                            <input type='text' ng-model='ctrl.NewEvent.title' 
+                                               id="title"
+                                               class="form-control" 
+                                               placeholder="Add a short, clear name"
+                                               maxlength="64"
+                                               required>
+                            </input>                                   
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="date" class="control-label col-sm-3">Time:</label>
+                        <label for="date" class="control-label col-sm-3">* Time:</label>
                         <div class="col-sm-3">
-                            <input ng-model="ctrl.newevent.date" id="date" class="form-control" placeholder="yyyy-MM-dd" required></input>
+                            <input ng-model="ctrl.NewEvent.date" id="date" 
+                                   placeholder="Date" 
+                                   class="form-control"
+                                   ng-pattern="/^[0-9\-]+$/" 
+                                   ng-minlength="10"
+                                   ng-maxlength="10"
+                                   required>
+                            </input>
                         </div>
-                        <div class="col-sm-3">
-                            <input ng-model='ctrl.newevent.start' placeholder="Start Time" class="form-control" required></input>
+                        <div class="col-xs-6 col-sm-3">
+                            <input ng-model='ctrl.NewEvent.start' 
+                                   placeholder="Start time" 
+                                   class="form-control" 
+                                   ng-pattern="/^[0-9:]+$/" 
+                                   ng-minlength="5"
+                                   ng-maxlength="5"
+                                   required>
+                            </input>
                         </div>
-                        <div class="col-sm-3">
-                            <input ng-model='ctrl.newevent.end' placeholder="End Time" class="form-control" required></input>
+                        <div class="col-xs-6 col-sm-3">
+                            <input ng-model='ctrl.NewEvent.end' 
+                                   placeholder="End Time" 
+                                   class="form-control"
+                                   ng-pattern="/^[0-9:]+$/" 
+                                   ng-minlength="5" 
+                                   ng-maxlength="5" 
+                                   required>
+                            </input>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="location" class="control-label col-sm-3" >Location:</label>
+                        <label for="location" class="control-label col-sm-3" >* Location:</label>
                          
-                        <div class="col-md-9">
-                            <input type='text' ng-model='ctrl.newevent.location' id="location" class="form-control" required></input>
+                        <div class="col-sm-9">
+                            <input type='text' ng-model='ctrl.NewEvent.location' 
+                                               id="location" 
+                                               class="form-control"
+                                               placeholder="Include a place or address" 
+                                               ng-maxlength="64"
+                                               required>
+                            </input>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="category" class="control-label col-sm-3" >* Category:</label>
+                         
+                        <div class="col-sm-9">
+                            <select type='text' ng-model='ctrl.NewEvent.category' 
+                                               id="category" 
+                                               class="form-control" 
+                                               ng-options="c.id as c.category for c in ctrl.categories"
+                                               required>
+                            </select>
                         </div>
                     </div>
                              
                     <div class="form-group">
                         <label for="body" class="control-label col-sm-3">Description:</label>
-                        <div class="col-md-9">
-                            <textarea ng-model="ctrl.newevent.body" class="form-control" rows="5" id="body"></textarea>
+                        <div class="col-sm-9">
+                            <textarea ng-model="ctrl.NewEvent.body"
+                                      id="body" 
+                                      class="form-control" 
+                                      rows="5" 
+                                      placeholder="Tell people more about the event">
+                            </textarea>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="link" class="control-label col-sm-3">Event Link:</label>
-                        <div class="col-md-9">
-                            <input type='text'  ng-model='ctrl.newevent.link' id="link" class="form-control"></input>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category" class="control-label col-sm-3" >Category:</label>
-                         
-                        <div class="col-md-9">
-                            <input type='text' ng-model='ctrl.newevent.category' id="category" class="form-control" required></input>
+                        <div class="col-sm-9">
+                            <input type='url' ng-model='ctrl.NewEvent.link' 
+                                              id="link" 
+                                              class="form-control"
+                                              placeholder="http://example.com">
+                            </input>
                         </div>
                     </div>
 
                     <div class="form-group"> 
                         <div class="col-sm-offset-3 col-sm-9">
-                            <input type="submit" class="btn btn-primary" value="Add New Event">
+                            <input type="submit" class="btn btn-primary" 
+                                                 value="Add New Event"
+                                                 ng-disabled="eventForm.$invalid">
                         </div>
                     </div>
                     

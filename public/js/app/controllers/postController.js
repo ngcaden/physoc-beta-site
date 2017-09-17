@@ -1,10 +1,29 @@
 // Angular Logic
 angular.module('postApp', [])
-    .controller('ListCtrl', ['$http', function($http) {
+    .controller('ListCtrl', ['$http', '$filter', function($http, $filter) {
         var self = this;
 
         self.events = [];
-        
+        self.currentDatetime = new Date();
+        self.currentDatetime.setMinutes(0);
+        self.NewEvent = {
+            date: $filter('date')(self.currentDatetime,"yyyy-MM-dd"),
+            start: $filter('date')(self.currentDatetime,"HH:mm"),
+            end: $filter('date')(self.currentDatetime.setHours(self.currentDatetime.getHours()+1), "HH:mm"),
+            category: 1,
+
+        };
+
+        var fetchCategories = function() {
+            return $http.get('/api/categories').then(function(response) {
+                    self.categories = response.data;
+            }, function(errResponse) {
+                console.error('Error while fetching categories');
+            });
+        };
+    
+        fetchCategories();
+
         self.getEventClass = function(item) {
             if(item.category === 'Careers') {
                 return 'panel-success';
@@ -24,7 +43,7 @@ angular.module('postApp', [])
             return $http.get('/api/events_all').then(function(response) {
                     self.events = response.data;
             }, function(errResponse) {
-                console.error('Error while fetching notes');
+                console.error('Error while fetching events');
             });
         };
     
@@ -37,14 +56,14 @@ angular.module('postApp', [])
 
         self.newEvent = function() {
             $http.post('/api/events', {
-                title: self.newevent.title,
-                date: self.newevent.date,
-                start: self.newevent.start,
-                end: self.newevent.end,
-                location: self.newevent.location,
-                body: self.newevent.body,
-                link: self.newevent.link,
-                category_id: self.newevent.category
+                title: self.NewEvent.title,
+                date: self.NewEvent.date,
+                start: self.NewEvent.start,
+                end: self.NewEvent.end,
+                location: self.NewEvent.location,
+                category_id: self.NewEvent.category,
+                body: self.NewEvent.body,
+                link: self.NewEvent.link
             }).then(fetchEvents);
         };
     }]);
