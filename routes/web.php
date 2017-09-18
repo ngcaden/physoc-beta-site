@@ -13,9 +13,14 @@
 
 // Pages
 Route::get('about', 'PagesController@getAbout');
-Route::get('sponsorship', 'PagesController@getSponsors');
+Route::get('sponsorship', 'PagesController@getSponsorship');
 Route::get('/', 'PagesController@getIndex');
+
+// Admin Pages
 Route::get('posts', 'PagesController@getPosts');
+Route::get('sponsors', 'PagesController@getSponsors');
+
+// Wiki
 Route::resource('wikis', 'WikiController', ['except' => ['create']]);
 Route::resource('subjects', 'SubjectController', ['except' => ['create']]);
 Route::get('wikis/create/{year}', array('as' => 'wikis.create', 'uses' => 'WikiController@create'))->where('year', '[\d]+');

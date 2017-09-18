@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use Carbon\Carbon;
-use Session;
+
 
 class EventsController extends Controller
 {
@@ -41,7 +41,6 @@ class EventsController extends Controller
             'link' => 'sometimes|url'
         ));
         Post::create($request->all());
-        Session::flash('success', 'The event was successfully created!');
     }
 
     /**
@@ -63,7 +62,6 @@ class EventsController extends Controller
         $event = Post::find($id);
 		$event->fill($request->all());
 		$event->save();
-        Session::flash('success', 'The event was successfully saved!');
     }
 
     /**

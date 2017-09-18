@@ -1,6 +1,5 @@
-// Angular Logic
 angular.module('postApp', [])
-    .controller('ListCtrl', ['$http', '$filter', function($http, $filter) {
+    .controller('ListCtrl', ['$http', '$filter', 'lr.upload', function($http, $filter) {
         var self = this;
 
         self.events = [];
@@ -54,7 +53,6 @@ angular.module('postApp', [])
         };
 
         self.newEvent = function() {
-            console.log(self.NewEvent);
             $http.post('/api/events', {
                 title: self.NewEvent.title,
                 date: self.NewEvent.date,
@@ -64,7 +62,7 @@ angular.module('postApp', [])
                 category_id: self.NewEvent.category,
                 body: self.NewEvent.body,
                 link: self.NewEvent.link
-            }).then(fetchEvents)
+            }).then(self.NewEvent='').then(fetchEvents)
         };
 
         self.editPost = function(event) {
@@ -73,7 +71,6 @@ angular.module('postApp', [])
         }
 
         self.updateEvent = function(index) {
-            console.log(self.editForm);
             $http.put('/api/events/' + index, {
                 title: self.editForm.title,
                 date: self.editForm.date,

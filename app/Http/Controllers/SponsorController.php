@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Sponsor;
-use Image;
-use Session;
 
 class SponsorController extends Controller
 {
@@ -19,18 +17,8 @@ class SponsorController extends Controller
 
     public function index() 
     {
-            $sponsors = Sponsor::all();
-            return $sponsors;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('sponsors.create');
+        $sponsors = Sponsor::all();
+        return $sponsors;
     }
 
     /**
@@ -43,45 +31,12 @@ class SponsorController extends Controller
     {
         // Validate the data
         $this->validate($request, array(
-            'name' => 'required|max:255|unique:sponsors|alpha_dash',
-            'url' => 'required|max:255|active_url',
-            'featured_image' => 'image',
+            'name' => 'required',
+            'url' => 'required|active_url',
             'description' => 'required',
+            'logo' => 'required|regex:/^[a-zA-Z\/\.]+$/'
         ));
-
-        // Store in the database
-        $sponsor = new Sponsor;
-
-        $sponsor->name = $request->name;
-        $sponsor->url = $request->url;
-
-        $image = $request->file('logo');
-        $filename = $request->name . '.' . $image->getClientOriginalExtension();
-        $location = public_path('logos' . $filename);
-        Image::make($image)->resize(800,400)->save($location);
-        $sponsor->logo = $filename;
-
-        $sponsor->description = $request->description;
-
-        $sponsor->save();
-
-        Session::flash('success', 'The sponsor was successfully saved!');
-
-        //Redirect to another page
-        return redirect()->route('sponsors.index');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $sponsor = Sponsor::find($id);
-
-        return view('sponsors.edit')->withSponsor($sponsor);
+        Sponsor::create($request->all());
     }
 
     /**
@@ -93,42 +48,16 @@ class SponsorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sponsor = Sponsor::find($id);
-
+        // Validate the data
         $this->validate($request, array(
-            'name' => "required|max:255|unique:sponsors,name,$id|alpha_dash",
-            'url' => 'required|max:255|active_url',
-            'featured_image' => 'image',
+            'name' => 'required',
+            'url' => 'required|active_url',
             'description' => 'required',
+            'logo' => 'required|regex:/^[a-zA-Z\/\.]+$/'
         ));
-        
-         // Store in the database
-    
-        $sponsor = sponsor::find($id);
-
-        $sponsor->name = $request->input('name');
-        $sponsor->url = $request->input('url');
-
-        if ($request->hasFile('logo')) {
-            $image = $request->file('logo');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('logos' . $filename);
-            Image::make($image)->resize(800,400)->save($location);
-            $oldfFilename = $sponsor->image;
-            
-            $sponsor->logo = $filename;
-            
-            Storage::delete($oldfFilename);
-        }
-
-        $sponsor->description = $request->input('description');
-
-        $sponsor->save();
-
-        Session::flash('success', 'The sponsor was successfully saved!');
-
-        //Redirect to another page
-        return redirect()->route('sponsors.index');
+        $sponsor = Sponsor::find($id);
+		$sponsor->fill($request->all());
+		$sponsor->save();
     }
 
     /**
@@ -140,12 +69,7 @@ class SponsorController extends Controller
     public function destroy($id)
     {
         $sponsor = Sponsor::find($id);
-        
-        Storage::delete($sponsor->image);
-        
+        // Storage::delete($sponsor->image);       
         $sponsor->delete();
-
-        Session::flash('success', 'The sponsor was successfully removed!');
-        return redirect()->route('sponsors.index');
     }
 }

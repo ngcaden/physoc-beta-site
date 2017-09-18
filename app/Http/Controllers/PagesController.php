@@ -13,12 +13,15 @@ class PagesController extends Controller {
         return view('pages.about');
     }
 
-    public function getSponsors() {
+    public function getSponsorship() {
         return view('pages.sponsorship');
     }
 
     public function getPosts() {
         return view('pages.posts');
     }
-    
+
+    public function getSponsors() {
+        return view('pages.sponsors');
+    }
 }
