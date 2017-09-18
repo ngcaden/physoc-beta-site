@@ -62,11 +62,14 @@
                                             placeholder="Insert link to sponsor's logo"
                                             required>
                         </input>
+                        
+                        <div class="col-sm-12" style="height:100px;padding-left: 0px;padding-right: 0px;">
+                            <img class='img-responsive' ng-src= "@{{ ctrl.NewSponsor.logo }}">
+                        </div>
                     </div>
                 </div>
 
-                <input type="file" file-model="myFile"/><button ng-click="ctrl.uploadFile()">Upload</button>
-
+                
                 <div class="form-group"> 
                     <div class="col-sm-offset-3 col-sm-9">
                         <input type="submit" class="btn btn-primary" 
@@ -86,10 +89,20 @@
                 <div class="panel-group">
                     <div ng-repeat="sponsor in ctrl.sponsors" class="panel">
                         <div class="panel-heading">
-                            <strong ng-bind='sponsor.name'></strong>
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-default btn-xs" ng-click="ctrl.editSponsor(sponsor)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                <button type="button" class="btn btn-default btn-xs" ng-click="ctrl.deleteSponsor(sponsor.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <strong ng-bind='sponsor.name'></strong>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="ctrl.editSponsor(sponsor)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="ctrl.deleteSponsor(sponsor.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <img class='img-responsive' ng-src= "@{{ sponsor.logo }}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,6 +167,8 @@
                                     </input>
                                 </div>
                             </div>
+
+                            <img class='img-responsive' ng-src= "@{{ ctrl.EditForm.logo }}">
                         </div><!-- .modal-body -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
