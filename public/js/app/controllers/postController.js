@@ -11,7 +11,6 @@ angular.module('postApp', [])
             start: $filter('date')(self.currentDatetime,"HH:mm"),
             end: $filter('date')(self.currentDatetime.setHours(self.currentDatetime.getHours()+1), "HH:mm"),
             category: 1,
-
         };
 
         var fetchCategories = function() {
@@ -55,6 +54,7 @@ angular.module('postApp', [])
         };
 
         self.newEvent = function() {
+            console.log(self.NewEvent);
             $http.post('/api/events', {
                 title: self.NewEvent.title,
                 date: self.NewEvent.date,
@@ -64,7 +64,26 @@ angular.module('postApp', [])
                 category_id: self.NewEvent.category,
                 body: self.NewEvent.body,
                 link: self.NewEvent.link
-            }).then(fetchEvents);
+            }).then(fetchEvents)
         };
+
+        self.editPost = function(event) {
+            self.editForm = event;
+            $('#myEditForm').modal('show');
+        }
+
+        self.updateEvent = function(index) {
+            console.log(self.editForm);
+            $http.put('/api/events/' + index, {
+                title: self.editForm.title,
+                date: self.editForm.date,
+                start: self.editForm.start,
+                end: self.editForm.end,
+                location: self.editForm.location,
+                category_id: self.editForm.category_id,
+                body: self.editForm.body,
+                link: self.editForm.link
+            }).then(fetchEvents).then($('#myEditForm').modal('hide'))
+        }
     }]);
 

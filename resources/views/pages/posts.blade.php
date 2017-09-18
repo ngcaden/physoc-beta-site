@@ -7,7 +7,7 @@
 <div class='row' ng-app='postApp' ng-controller='ListCtrl as ctrl'>
     <div class="col-md-6">
         <div class="card"  id="column1">
-            <h1>All Events</h1>
+            <h1>Manage Events</h1>
 
             <hr>
 

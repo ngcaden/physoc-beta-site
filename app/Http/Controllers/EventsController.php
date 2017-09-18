@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use Carbon\Carbon;
+use Session;
 
 class EventsController extends Controller
 {
@@ -40,6 +41,7 @@ class EventsController extends Controller
             'link' => 'sometimes|url'
         ));
         Post::create($request->all());
+        Session::flash('success', 'The event was successfully created!');
     }
 
     /**
@@ -48,12 +50,20 @@ class EventsController extends Controller
     * @param  int  $id
     * @return Response
     */
-    public function update($id) {
+    public function update(Request $request, $id) {
+        $this->validate($request, array(
+            'title' => 'required|max:64',
+            'date' => 'required|regex:/^[0-9\-]+$/|min:10|max:10',
+            'start' => 'required|regex:/^[0-9:]+$/|min:5|max:5',
+            'end' => 'required|regex:/^[0-9:]+$/|min:5|max:5',
+            'category_id' => 'required|numeric',
+            'location' => 'required|max:64',
+            'link' => 'sometimes|url|nullable'
+        ));
         $event = Post::find($id);
-        $event->done = Request::input('done');
-        $event->save();
-
-        return $event;
+		$event->fill($request->all());
+		$event->save();
+        Session::flash('success', 'The event was successfully saved!');
     }
 
     /**

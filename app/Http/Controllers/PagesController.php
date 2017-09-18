@@ -16,4 +16,9 @@ class PagesController extends Controller {
     public function getSponsors() {
         return view('pages.sponsorship');
     }
+
+    public function getPosts() {
+        return view('pages.posts');
+    }
+    
 }

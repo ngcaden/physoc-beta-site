@@ -6,7 +6,7 @@
     
     <div class='row'>
         <div class='col-md-6'>
-            <div class="card" id="welcome-column">   
+            <div class="card" id="column1">   
                 
                 <div class="text-center">
                     <img src="/images/welcome-banner/freshers-fair-2017.jpg"  style='width:100%;'>
@@ -31,7 +31,7 @@
         </div> <!-- .col-md-6 -->
 
         <div class='col-md-6' ng-app='eventApp'>            
-            <div class="card" ng-controller='ListCtrl as ctrl'  id="event-column">
+            <div class="card" ng-controller='ListCtrl as ctrl'  id="column2">
                 <h3>Upcoming Events</h3>
                 <hr>
                 <div class='text-center'>
@@ -81,4 +81,5 @@
 
 @section('javascript')
 <script src="/js/app/controllers/eventController.js"></script>
+<script src="/js/equalColumn.js"></script>
 @endsection

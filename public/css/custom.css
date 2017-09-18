@@ -55,3 +55,6 @@ strong, a span {
     color: black;
 }
   
+.panel > .panel-heading {
+    color: black;
+}
