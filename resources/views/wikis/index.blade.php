@@ -17,8 +17,8 @@
                 
                     <div id="collapse@{{ year.year_id }}" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <a ng-repeat="subject in ctrl.subjects | filter: {year: year.year_id}" ng-click="ctrl.fetch" href>
-                                <span ng-bind="subject.name"></span>
+                            <a ng-repeat="course in ctrl.courses | filter: {year: year.year_id}" ng-click="ctrl.fetchCourse(course.name)" href>
+                                <span ng-bind="course.name"></span>
                             </a>
                         </div>
                     </div>
@@ -29,22 +29,71 @@
         </div><!-- .col-sm-6 -->
 
         <div class="col-sm-9">
-            <div class="card">    
-                {{--  <h3 ng-bind="ctrl.wiki.welcome"></h3>  --}}
-                {{--  <h3 ng-show="ctrl.wiki.name" ng-bind="ctrl.wiki.name"></h3>  --}}
-                {{--  <span class='pull-right'>
+            <div class="card-wiki">    
+                <h3>
+                    <span ng-show="ctrl.wiki.name" ng-bind="ctrl.wiki.name"></span>
+                    <span class='pull-right'>
                         <form class="form-horizontal" method="POST" action="{{ route('logout') }}">
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-primary">
                                 Logout
                             </button>
                         </form>
-                    </span>  --}}
-                {{--  <hr>
-                <h3 ng-show="ctrl.wiki.welcome" ng-bind="ctrl.wiki.welcome"></h3>  --}}
-
-                    
+                    </span>
+                </span>
+                </h3>  
+                <hr>
                 
+                <!-- Description -->
+                <p>
+                    <span ng-bind="ctrl.wiki.description"></span>
+                </p> 
+                &nbsp 
+                <div class="dropdownbox">
+                    <a class="btn" data-toggle="collapse" data-target="#viewnotes">
+                        <strong>Course Notes</strong> &nbsp <span class="pull-right"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </a>
+                    
+                    
+                    <div class="collapse" id="viewnotes">
+                        <hr>
+                        <ul class="nav nav-tabs">
+                            <li ng-repeat="uniqueSet in ctrl.uniqueSets">
+                                <a ng-href="#set@{{uniqueSet.id}}" data-toggle="tab">
+                                    <span ng-bind="uniqueSet.set"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane" ng-repeat="uniqueSet in ctrl.uniqueSets" id="set@{{uniqueSet.id}}">
+                                
+                                    <div ng-repeat="note in ctrl.courseNotes | filter: {set:uniqueSet.set}">
+                                        <a ng-href="@{{note.link}}">
+                                            <span ng-bind="note.name"></span>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                &nbsp 
+                <div class="dropdownbox">
+                    <a class="btn" data-toggle="collapse" data-target="#viewlinks">
+                        <strong>Useful Links <i class="fa fa-caret-down" aria-hidden="true"></i></strong>
+                    </a>
+
+                    <div class="collapse" id="viewlinks">
+                        <span ng-bind="ctrl.wiki.links"></span>
+                    </div> 
+                </div>
+
+                &nbsp 
+                <h4>Past Papers and Solutions</h4>
+                <p>
+                    <span ng-bind="ctrl.wiki.papers"></span>
+                </p> 
+
                 {{--  <div class="container-fluid">	
                     <ul class="nav nav-tabs">
                         <li class="active"><a  href="#1" data-toggle="tab">Year 1</a>
@@ -159,6 +208,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('javascript')

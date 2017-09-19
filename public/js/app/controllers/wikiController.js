@@ -10,18 +10,44 @@ angular.module('wikiApp', [])
     ];
 
 
-    self.subjects = [
+    self.courses = [
         {name: 'Mathematical Analysis', year: 1},
         {name: 'Mechanics', year:1},
         {name: 'Comprehensives 1', year: 3},
         {name: 'Environmental Physics', year: 0}
     ];
 
-    self.wiki = [
-        {welcome: 'Welcome to Imperial Physics Wiki',subject:''},
-    ];
+    self.wiki = {name: 'Welcome to Imperial Physics Wiki',
+                 description:'Select your course on the left tab.'};
 
-    console.log(self.wiki);
+    self.fetchCourse = function(coursename) {
+        self.wiki = {id: 11,
+                     course: 'Test Course',
+                     description:'This course is no longer in teaching but relevant to course 2',
+                     year: 1
+                    };
+        self.wiki.name = coursename;
+                    
+        fetchCourseNotes();
+    };
+
+
+    var fetchCourseNotes = function() {
+        self.uniqueSets = [
+            {id: 1, set:'2016 Professor X', course_id: 11},
+            {id: 2, set:'2017 Cambridge', course_id: 11},
+        ];
+        self.courseNotes = [
+            {id: 1, name:'Lecture 1', link:'/', set:'2016 Professor X', course_id: 11},
+            {id: 2, name:'Lecture 2', link:'/', set:'2016 Professor X', course_id: 11},
+            {id: 3, name:'Lecture 3', link:'/', set:'2016 Professor X', course_id: 11},
+            {id: 4, name:'Lecture 4', link:'/', set:'2016 Professor X', course_id: 11},
+            {id: 5, name:'Lecture 1', link:'/', set:'2017 Cambridge', course_id: 11},
+            {id: 6, name:'Lecture 2', link:'/', set:'2017 Cambridge', course_id: 11},
+        ];
+    };
+
+    // self.fetchCourse();
     // self.sponsors = [];
     
     // var fetchSponsors = function() {
