@@ -16,19 +16,14 @@ class WikiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct()
-     {
-         $this->middleware('auth');
-     }
+    //  public function __construct()
+    //  {
+    //      $this->middleware('auth');
+    //  }
 
     public function index()
     {
-        $ones = Subject::where('year',1)->get();
-        $twos = Subject::where('year',2)->get();
-        $threes = Subject::where('year',3)->get();
-        $options = Subject::where('year',0)->get();
-        $subjects = [$ones, $twos, $threes, $options];
-        return view('wikis.index')->withOnes($ones)->withTwos($twos)->withThrees($threes)->withOptions($options);
+        return view('wikis.index');
     }
 
     /**
