@@ -9,24 +9,27 @@
                 <div class="panel-group">
                     <div ng-repeat="year in ctrl.years" class="panel panel-info">
                                         
-                    <div class="panel-heading">
-                        <a data-toggle="collapse" href="#collapse@{{ year.year_id }}">
-                            <strong ng-bind="year.name"></strong>
-                        </a>
-                    </div>
-                
-                    <div id="collapse@{{ year.year_id }}" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <a ng-repeat="course in ctrl.courses | filter: {year: year.year_id}" ng-click="ctrl.fetchCourse(course.name)" href>
-                                <span ng-bind="course.name"></span>
+                        <div class="panel-heading">
+                            <a data-toggle="collapse" href="#collapse@{{ year.year_id }}">
+                                <strong><span ng-bind="year.name"></span> <i class="fa fa-caret-down" aria-hidden="true"></i></strong>
                             </a>
                         </div>
-                    </div>
-
+                
+                        <div id="collapse@{{ year.year_id }}" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <ul>
+                                    <li ng-repeat="course in ctrl.courses | filter: {year: year.year_id}">
+                                        <a ng-click="ctrl.fetchWiki(course.name)" href>
+                                            <span ng-bind="course.name"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div><!-- .card -->
-        </div><!-- .col-sm-6 -->
+        </div><!-- .col-sm-3 -->
 
         <div class="col-sm-9">
             <div class="card-wiki">    
@@ -48,17 +51,18 @@
                 <p>
                     <span ng-bind="ctrl.wiki.description"></span>
                 </p> 
-                &nbsp 
+               </h5>
+
+                <!-- Notes -->
                 <div class="dropdownbox">
                     <a class="btn" data-toggle="collapse" data-target="#viewnotes">
-                        <strong>Course Notes</strong> &nbsp <span class="pull-right"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                        <strong>Course Notes <i class="fa fa-caret-down" aria-hidden="true"></i></strong>
                     </a>
-                    
-                    
-                    <div class="collapse" id="viewnotes">
-                        <hr>
+
+                    <div class="collapse in" id="viewnotes" ng-show="ctrl.courseNotes">
                         <ul class="nav nav-tabs">
-                            <li ng-repeat="uniqueSet in ctrl.uniqueSets">
+                            <li ng-repeat="uniqueSet in ctrl.uniqueSets" 
+                                ng-class="{active: uniqueSet.id == 1}">
                                 <a ng-href="#set@{{uniqueSet.id}}" data-toggle="tab">
                                     <span ng-bind="uniqueSet.set"></span>
                                 </a>
@@ -66,145 +70,75 @@
                         </ul>
 
                         <div class="tab-content">
-                            <div class="tab-pane" ng-repeat="uniqueSet in ctrl.uniqueSets" id="set@{{uniqueSet.id}}">
-                                
-                                    <div ng-repeat="note in ctrl.courseNotes | filter: {set:uniqueSet.set}">
-                                        <a ng-href="@{{note.link}}">
-                                            <span ng-bind="note.name"></span>
-                                        </a>
-                                    </div>
+                            <div class="tab-pane" ng-repeat="uniqueSet in ctrl.uniqueSets" 
+                                                  id="set@{{uniqueSet.id}}"
+                                                  ng-class="{active: uniqueSet.id == 1}">
+
+                                    &nbsp
+                                    <ul>
+                                        <li ng-repeat="note in ctrl.courseNotes | filter: {set:uniqueSet.set}">
+                                            <a ng-href="@{{note.link}}">
+                                                <span ng-bind="note.name"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
                             </div>
                         </div>
                     </div>
                 </div> 
                 &nbsp 
+
+                <!-- Useful Links -->
                 <div class="dropdownbox">
                     <a class="btn" data-toggle="collapse" data-target="#viewlinks">
                         <strong>Useful Links <i class="fa fa-caret-down" aria-hidden="true"></i></strong>
                     </a>
 
-                    <div class="collapse" id="viewlinks">
-                        <span ng-bind="ctrl.wiki.links"></span>
-                    </div> 
-                </div>
-
+                    <div class="collapse in" id="viewlinks" ng-show="ctrl.usefulLinks">
+                        <ul>
+                            <li ng-repeat="link in ctrl.usefulLinks">
+                                <a ng-href="@{{link.url}}" target="_blank">
+                                    <span ng-bind="link.name"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
                 &nbsp 
-                <h4>Past Papers and Solutions</h4>
-                <p>
-                    <span ng-bind="ctrl.wiki.papers"></span>
-                </p> 
 
-                {{--  <div class="container-fluid">	
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a  href="#1" data-toggle="tab">Year 1</a>
-                        </li>
-                        <li><a href="#2" data-toggle="tab">Year 2</a>
-                        </li>
-                        <li><a href="#3" data-toggle="tab">Year 3</a>
-                        </li>
-                        <li><a href="#4" data-toggle="tab">Options</a>
-                        </li>
-                    </ul>
+                <!-- Past Papers -->
+                <div class="dropdownbox">
+                    <a class="btn" data-toggle="collapse" data-target="#viewpapers">
+                        <strong>Past Papers and Solutions <i class="fa fa-caret-down" aria-hidden="true"></i></strong>
+                    </a>
 
-                    <div class="tab-content ">
-                        <div class="tab-pane active" id="1">
-                            <div class="well">
-                                @foreach ($ones as $one) 
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapse{{ $one->id }}">{{ $one->name }}</a>
-                                                </h4>
-                                            </div>
-                                            
-                                            <div id="collapse{{ $one->id }}" class="panel-collapse collapse">
-                                            
-                                            <div class="panel-body">
-                                                @foreach($one->wikis as $wiki)
-                                                    <p>{!! Html::linkRoute('wikis.show', $wiki->year, $wiki->id) !!}</p>
-                                                @endforeach
-                                            </div>
-                                            </div>
-                                        </div>
+                    <div class="collapse in" id="viewpapers" ng-show="ctrl.pastPapers">
+                        <ul class="nav nav-tabs">
+                            <li ng-repeat="paper in ctrl.pastPapers" 
+                                ng-class="{active: paper.id == 1}">
+                                <a ng-href="#paper@{{paper.id}}" data-toggle="tab" ng-click="ctrl.fetchAnswers()">
+                                    <span ng-bind="paper.year"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane" ng-repeat="paper in ctrl.pastPapers" 
+                                                  id="paper@{{paper.id}}"
+                                                  ng-class="{active: paper.id == 1}">
+                                &nbsp
+                                <p><a ng-href="@{{paper.url}}">Download the PDF version of the paper here</a></p>
+                                <div ng-repeat="question in ctrl.questions">
+                                    <h5>Question <span ng-bind="question.question"></h5>
+                                    <div ng-repeat="answer in ctrl.answers | filter: {question: question.question}">
+                                        <p ng-bind="answer.body"></p>
                                     </div>
-                                @endforeach
-                                <div class="text-center">
-                                    {!! Html::linkRoute('wikis.create', 'Upload Year 1 Past Paper', array(1), array('class' => 'btn btn-default')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="2">
-                            <div class="well">
-                                @foreach ($twos as $two) 
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapse1">{{ $two->name }}</a>
-                                                </h4>
-                                            </div>
-                                            
-                                            <div id="collapse1" class="panel-collapse collapse">
-                                            
-                                            <div class="panel-body">Panel Body</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="text-center">
-                                    {!! Html::linkRoute('wikis.create', 'Upload Year 2 Past Paper', array(2), array('class' => 'btn btn-default')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="3">
-                            <div class="well">
-                                @foreach ($threes as $three) 
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapse1">{{ $three->name }}</a>
-                                                </h4>
-                                            </div>
-                                            
-                                            <div id="collapse1" class="panel-collapse collapse">
-                                            
-                                            <div class="panel-body">Panel Body</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="text-center">
-                                    {!! Html::linkRoute('wikis.create', 'Upload Year 3 Past Paper', array(3), array('class' => 'btn btn-default')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="4">
-                            <div class="well">
-                                @foreach ($options as $option) 
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapse1">{{ $option->name }}</a>
-                                                </h4>
-                                            </div>
-                                            
-                                            <div id="collapse1" class="panel-collapse collapse">
-                                            
-                                            <div class="panel-body">Panel Body</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="text-center">
-                                    {!! Html::linkRoute('wikis.create', 'Upload Options Past Paper', array(0), array('class' => 'btn btn-default')) !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>                --}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

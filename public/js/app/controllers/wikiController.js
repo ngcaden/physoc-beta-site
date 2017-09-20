@@ -10,17 +10,21 @@ angular.module('wikiApp', [])
     ];
 
 
-    self.courses = [
-        {name: 'Mathematical Analysis', year: 1},
-        {name: 'Mechanics', year:1},
-        {name: 'Comprehensives 1', year: 3},
-        {name: 'Environmental Physics', year: 0}
-    ];
+    var fetchCourses = function() {
+        $http.get('/api/courses').then(function(response) {
+            self.courses = response.data;
+            console.log(self.courses);
+            }, function(errResponse) {
+            console.error('Error while fetching courses');
+            });
+        };
+
+    fetchCourses();
 
     self.wiki = {name: 'Welcome to Imperial Physics Wiki',
                  description:'Select your course on the left tab.'};
 
-    self.fetchCourse = function(coursename) {
+    self.fetchWiki = function(coursename) {
         self.wiki = {id: 11,
                      course: 'Test Course',
                      description:'This course is no longer in teaching but relevant to course 2',
@@ -29,8 +33,10 @@ angular.module('wikiApp', [])
         self.wiki.name = coursename;
                     
         fetchCourseNotes();
+        fetchUsefulLinks();
+        fetchPastPapers();
+        self.fetchAnswers();
     };
-
 
     var fetchCourseNotes = function() {
         self.uniqueSets = [
@@ -47,6 +53,39 @@ angular.module('wikiApp', [])
         ];
     };
 
+    var fetchUsefulLinks = function() {
+        self.usefulLinks = [
+            {id: 1, url:'http://google.com', name: 'Google'},
+            {id: 2, url:'http://apple.com', name: 'Apple'},
+        ];
+    };
+
+    var fetchPastPapers = function() {
+        self.pastPapers = [
+            {id: 1, course_id: 11, year: '2010', url: 'http://google.com'},
+            {id: 2, course_id: 11, year: '2011', url:'http://apple.com'},
+            {id: 3, course_id: 11, year: '2012', url:'http://apple.com'},
+            {id: 4, course_id: 11, year: '2013', url:'http://apple.com'},
+            {id: 5, course_id: 11, year: '2014', url:'http://apple.com'},
+            {id: 6, course_id: 11, year: '2015', url:'http://apple.com'},
+            {id: 7, course_id: 11, year: '2016', url:'http://apple.com'},
+            {id: 8, course_id: 11, year: '2017', url:'http://apple.com'},
+            {id: 9, course_id: 11, year: '2018', url:'http://apple.com'},
+        ];
+    };
+
+    self.fetchAnswers = function() {
+        self.questions = [
+            {id: 1, question:'1', course_id: 11},
+            {id: 2, question:'2', course_id: 11},
+        ];
+
+        self.answers = [
+            {id:1, question: 1, body: 'ii. Answer to 1ii'},
+            {id:2, question: 1, body: 'i. Answer to 1i'},
+            {id:3, question: 2, body: 'i. Answer to 2i'}
+        ];
+    };
     // self.fetchCourse();
     // self.sponsors = [];
     

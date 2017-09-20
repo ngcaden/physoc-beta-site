@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Subject;
-use Session;
+use App\Course;
 
-class SubjectController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,17 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::all();
+        return Course::all();
+    }
 
-        return view('subjects.index')->withSubjects($subjects);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -28,20 +35,7 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name' => 'required|max:255',
-            'year' => 'required|numeric'
-        ));
-
-        $subject = new Subject;
-
-        $subject->name = $request->name;
-        $subject->year = $request->year;
-        $subject->save();
-
-        Session::flash('success', 'New subject has been created');
-
-        return redirect()->route('subjects.index');
+        //
     }
 
     /**

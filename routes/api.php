@@ -22,3 +22,4 @@ Route::resource('events', 'EventsController');
 Route::resource('sponsors', 'SponsorController');
 Route::resource('committee', 'CommitteeController');
 Route::resource('categories', 'CategoryController');
+Route::resource('courses', 'CourseController');
