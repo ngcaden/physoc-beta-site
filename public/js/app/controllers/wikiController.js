@@ -13,7 +13,6 @@ angular.module('wikiApp', [])
     var fetchCourses = function() {
         $http.get('/api/courses').then(function(response) {
             self.courses = response.data;
-            console.log(self.courses);
             }, function(errResponse) {
             console.error('Error while fetching courses');
             });
@@ -24,41 +23,44 @@ angular.module('wikiApp', [])
     self.wiki = {name: 'Welcome to Imperial Physics Wiki',
                  description:'Select your course on the left tab.'};
 
-    self.fetchWiki = function(coursename) {
+    self.fetchWiki = function(course) {
         self.wiki = {id: 11,
                      course: 'Test Course',
                      description:'This course is no longer in teaching but relevant to course 2',
                      year: 1
                     };
-        self.wiki.name = coursename;
+        
+        self.wiki.name = course.name;
                     
-        fetchCourseNotes();
-        fetchUsefulLinks();
+        fetchCourseNotes(course.id);
+        fetchUsefulLinks(course.id);
         fetchPastPapers();
         self.fetchAnswers();
     };
 
-    var fetchCourseNotes = function() {
-        self.uniqueSets = [
-            {id: 1, set:'2016 Professor X', course_id: 11},
-            {id: 2, set:'2017 Cambridge', course_id: 11},
-        ];
-        self.courseNotes = [
-            {id: 1, name:'Lecture 1', link:'/', set:'2016 Professor X', course_id: 11},
-            {id: 2, name:'Lecture 2', link:'/', set:'2016 Professor X', course_id: 11},
-            {id: 3, name:'Lecture 3', link:'/', set:'2016 Professor X', course_id: 11},
-            {id: 4, name:'Lecture 4', link:'/', set:'2016 Professor X', course_id: 11},
-            {id: 5, name:'Lecture 1', link:'/', set:'2017 Cambridge', course_id: 11},
-            {id: 6, name:'Lecture 2', link:'/', set:'2017 Cambridge', course_id: 11},
-        ];
-    };
+    var fetchCourseNotes = function(course_id) {
+        $http.get('/api/uniquesets/' + course_id).then(function(response) {
+            self.uniqueSets = response.data;
+            console.log(self.uniqueSets);
+            }, function(errResponse) {
+            console.error('Error while fetching unique sets');
+            });
 
-    var fetchUsefulLinks = function() {
-        self.usefulLinks = [
-            {id: 1, url:'http://google.com', name: 'Google'},
-            {id: 2, url:'http://apple.com', name: 'Apple'},
-        ];
-    };
+        $http.get('/api/coursenotes/' + course_id).then(function(response) {
+            self.usefulLinks = response.data;
+            }, function(errResponse) {
+            console.error('Error while fetching course notes');
+            });
+
+        };
+
+    var fetchUsefulLinks = function(course_id) {
+        $http.get('/api/usefullinks/' + course_id).then(function(response) {
+            self.usefulLinks = response.data;
+            }, function(errResponse) {
+            console.error('Error while fetching useful links');
+            });
+        };
 
     var fetchPastPapers = function() {
         self.pastPapers = [

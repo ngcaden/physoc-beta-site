@@ -23,3 +23,6 @@ Route::resource('sponsors', 'SponsorController');
 Route::resource('committee', 'CommitteeController');
 Route::resource('categories', 'CategoryController');
 Route::resource('courses', 'CourseController');
+Route::resource('usefullinks', 'UsefulLinkController');
+Route::resource('coursenotes', 'CourseNoteController');
+Route::get('uniquesets/{course_id}', 'CourseNoteController@showUniqueSets');

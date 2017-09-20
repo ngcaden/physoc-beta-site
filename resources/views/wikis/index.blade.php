@@ -15,11 +15,11 @@
                             </a>
                         </div>
                 
-                        <div id="collapse@{{ year.year_id }}" class="panel-collapse collapse in">
+                        <div id="collapse@{{ year.year_id }}" class="panel-collapse collapse in" ng-show="ctrl.courses">
                             <div class="panel-body">
                                 <ul>
                                     <li ng-repeat="course in ctrl.courses | filter: {year: year.year_id}">
-                                        <a ng-click="ctrl.fetchWiki(course.name)" href>
+                                        <a ng-click="ctrl.fetchWiki(course)" href>
                                             <span ng-bind="course.name"></span>
                                         </a>
                                     </li>
