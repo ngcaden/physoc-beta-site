@@ -41,17 +41,23 @@ angular.module('wikiApp', [])
     var fetchCourseNotes = function(course_id) {
         $http.get('/api/uniquesets/' + course_id).then(function(response) {
             self.uniqueSets = response.data;
+            
+            // Adding id for API return
+            for (i = 0; i < self.uniqueSets.length; i++) { 
+                (self.uniqueSets[i])['id'] = i;
+            }
+            
             console.log(self.uniqueSets);
             }, function(errResponse) {
             console.error('Error while fetching unique sets');
+            }).then(function() {
+                $http.get('/api/coursenotes/' + course_id).then(function(response) {
+                    self.courseNotes = response.data;
+                    console.log(self.courseNotes);
+                    }, function(errResponse) {
+                    console.error('Error while fetching course notes');
+                    });
             });
-
-        $http.get('/api/coursenotes/' + course_id).then(function(response) {
-            self.usefulLinks = response.data;
-            }, function(errResponse) {
-            console.error('Error while fetching course notes');
-            });
-
         };
 
     var fetchUsefulLinks = function(course_id) {

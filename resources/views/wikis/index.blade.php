@@ -62,7 +62,7 @@
                     <div class="collapse in" id="viewnotes" ng-show="ctrl.courseNotes">
                         <ul class="nav nav-tabs">
                             <li ng-repeat="uniqueSet in ctrl.uniqueSets" 
-                                ng-class="{active: uniqueSet.id == 1}">
+                                ng-class="{active: uniqueSet.id == 0}">
                                 <a ng-href="#set@{{uniqueSet.id}}" data-toggle="tab">
                                     <span ng-bind="uniqueSet.set"></span>
                                 </a>
@@ -72,7 +72,7 @@
                         <div class="tab-content">
                             <div class="tab-pane" ng-repeat="uniqueSet in ctrl.uniqueSets" 
                                                   id="set@{{uniqueSet.id}}"
-                                                  ng-class="{active: uniqueSet.id == 1}">
+                                                  ng-class="{active: uniqueSet.id == 0}">
 
                                     &nbsp
                                     <ul>
