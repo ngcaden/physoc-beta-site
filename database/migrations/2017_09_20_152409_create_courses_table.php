@@ -16,11 +16,12 @@ class CreateCoursesTable extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description')->nullable();
             $table->integer('year')->unsigned();
             $table->timestamps();
         });
 
-        DB::table('courses')->insert(['name' => 'Electricity & Magnetism','year' => '1']);
+        DB::table('courses')->insert(['name' => 'Electricity & Magnetism','year' => '1','description' => 'EM Test']);
         DB::table('courses')->insert(['name' => 'Electronics','year' => '1']);
         DB::table('courses')->insert(['name' => 'Astrophysics','year' => '0']);
         DB::table('courses')->insert(['name' => 'Atomic & Molecular Physics','year' => '3']);

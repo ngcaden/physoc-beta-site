@@ -23,7 +23,7 @@
                         <a style="{{ Request::is('sponsorship') ? "font-weight:bold":"" }}"  href="/sponsorship">Sponsors</a>
                     </div>
                     <div class='col-xs-3 col-md-2'>
-                        <a style="{{ Request::is('wikis') ? "font-weight:bold":"" }}"  href="/wikis">Wiki</a>
+                        <a style="{{ Request::is('wiki') ? "font-weight:bold":"" }}"  href="/wiki">Wiki</a>
                     </div>  
 
                     <div class='col-xs-1 col-xs-offset-5 col-md-1 col-md-offset-0'>

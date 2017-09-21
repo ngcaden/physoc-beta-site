@@ -24,39 +24,31 @@ angular.module('wikiApp', [])
                  description:'Select your course on the left tab.'};
 
     self.fetchWiki = function(course) {
-        self.wiki = {id: 11,
-                     course: 'Test Course',
-                     description:'This course is no longer in teaching but relevant to course 2',
-                     year: 1
-                    };
-        
-        self.wiki.name = course.name;
+        self.wiki = course;
                     
         fetchCourseNotes(course.id);
         fetchUsefulLinks(course.id);
-        fetchPastPapers();
+        fetchPastPapers(course.id);
         self.fetchAnswers();
-    };
+        };
 
     var fetchCourseNotes = function(course_id) {
         $http.get('/api/uniquesets/' + course_id).then(function(response) {
-            self.uniqueSets = response.data;
-            
-            // Adding id for API return
-            for (i = 0; i < self.uniqueSets.length; i++) { 
-                (self.uniqueSets[i])['id'] = i;
+                self.uniqueSets = response.data;
+                
+                // Adding id for uniqueSets
+                for (i = 0; i < self.uniqueSets.length; i++) { 
+                    (self.uniqueSets[i])['id'] = i;
             }
             
-            console.log(self.uniqueSets);
             }, function(errResponse) {
-            console.error('Error while fetching unique sets');
-            }).then(function() {
-                $http.get('/api/coursenotes/' + course_id).then(function(response) {
-                    self.courseNotes = response.data;
-                    console.log(self.courseNotes);
-                    }, function(errResponse) {
-                    console.error('Error while fetching course notes');
-                    });
+                console.error('Error while fetching unique sets');
+                }).then(function() {
+                    $http.get('/api/coursenotes/' + course_id).then(function(response) {
+                            self.courseNotes = response.data;
+                        }, function(errResponse) {
+                            console.error('Error while fetching course notes');
+                        });
             });
         };
 
@@ -68,19 +60,18 @@ angular.module('wikiApp', [])
             });
         };
 
-    var fetchPastPapers = function() {
-        self.pastPapers = [
-            {id: 1, course_id: 11, year: '2010', url: 'http://google.com'},
-            {id: 2, course_id: 11, year: '2011', url:'http://apple.com'},
-            {id: 3, course_id: 11, year: '2012', url:'http://apple.com'},
-            {id: 4, course_id: 11, year: '2013', url:'http://apple.com'},
-            {id: 5, course_id: 11, year: '2014', url:'http://apple.com'},
-            {id: 6, course_id: 11, year: '2015', url:'http://apple.com'},
-            {id: 7, course_id: 11, year: '2016', url:'http://apple.com'},
-            {id: 8, course_id: 11, year: '2017', url:'http://apple.com'},
-            {id: 9, course_id: 11, year: '2018', url:'http://apple.com'},
-        ];
-    };
+    var fetchPastPapers = function(course_id) {
+        $http.get('/api/pastpapers/' + course_id).then(function(response) {
+                self.pastPapers = response.data;
+                
+                // Adding id for pastPapers years
+                for (i = 0; i < self.pastPapers.length; i++) { 
+                    (self.pastPapers[i])['year_id'] = i;
+                };
+            }, function(errResponse) {
+                console.error('Error while fetching past papers');
+            });
+        };
 
     self.fetchAnswers = function() {
         self.questions = [

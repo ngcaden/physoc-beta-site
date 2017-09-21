@@ -116,7 +116,7 @@
                     <div class="collapse in" id="viewpapers" ng-show="ctrl.pastPapers">
                         <ul class="nav nav-tabs">
                             <li ng-repeat="paper in ctrl.pastPapers" 
-                                ng-class="{active: paper.id == 0}">
+                                ng-class="{active: paper.year_id == 0}">
                                 <a ng-href="#paper@{{paper.id}}" data-toggle="tab" ng-click="ctrl.fetchAnswers()">
                                     <span ng-bind="paper.year"></span>
                                 </a>
@@ -126,7 +126,7 @@
                         <div class="tab-content">
                             <div class="tab-pane" ng-repeat="paper in ctrl.pastPapers" 
                                                   id="paper@{{paper.id}}"
-                                                  ng-class="{active: paper.id == 0}">
+                                                  ng-class="{active: paper.year_id == 0}">
                                 &nbsp
                                 <p><a ng-href="@{{paper.url}}">Download the PDF version of the paper here</a></p>
                                 <div ng-repeat="question in ctrl.questions">

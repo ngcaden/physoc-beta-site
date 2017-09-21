@@ -24,4 +24,8 @@ class PagesController extends Controller {
     public function getSponsors() {
         return view('pages.sponsors');
     }
+
+    public function getWiki() {
+        return view('pages.wiki');
+    }
 }
