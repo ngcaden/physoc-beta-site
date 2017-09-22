@@ -19,7 +19,7 @@
                             <div class="panel-body">
                                 <ul>
                                     <li ng-repeat="course in ctrl.courses | filter: {year: year.year_id}">
-                                        <a ng-click="ctrl.fetchWiki(course)" href>
+                                        <a ng-click="ctrl.fetchWiki(course.id)" href>
                                             <span ng-bind="course.name"></span>
                                         </a>
                                     </li>
@@ -54,7 +54,7 @@
                 
                 <!-- Description -->
                 <p>
-                    <span ng-bind="ctrl.wiki.description"></span>
+                    <span ng-bind-html="ctrl.wiki.html_description"></span>
                 </p>
 
                 <p ng-hide="ctrl.wiki.welcome">
@@ -215,12 +215,15 @@
         <div class="modal fade" id="myEditDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edit Course Description</h4>
                     </div>
+
                     <form ng-submit="ctrl.editDescription(ctrl.EditDescription.id)" class="form-horizontal" 
                                 name="editDescriptionForm" novalidate>
+                        
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="name" class="control-label col-sm-3">Name:</label> 
@@ -239,6 +242,12 @@
                             </div>
 
                             <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <div class="alert alert-danger text-center" role="alert" ng-show="ctrl.EditDescription.error">
+                                        <span ng-bind="ctrl.EditDescription.error"></span>
+                                    </div>
+                                </div>
+
                                 <label for="description" class="control-label col-sm-3">Description:</label> 
                                 <div class="col-sm-9">
                                     <textarea ng-model='ctrl.EditDescription.description' 
@@ -248,10 +257,20 @@
                                     </textarea>                                   
                                 </div>
                             </div>
+
+                            <div class="form-group" ng-show="ctrl.EditDescription.error">
+                                <label for="current_description" class="control-label col-sm-3">Current Version:</label> 
+                                <div class="col-sm-9">
+                                    <p ng-bind-html='ctrl.current_course.html_description' 
+                                                        id="current_description"
+                                                        class="form-control-static">
+                                    </p>                                   
+                                </div>
+                            </div>
                                         
                         </div><!-- .modal-body -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ctrl.fetchWiki(ctrl.wiki.id)">Cancel Edit</button>
                             <input type="submit" class="btn btn-primary" 
                                                 value="Save Changes"
                                                 ng-disabled="editDescriptionForm.$invalid"></input>
@@ -264,6 +283,7 @@
 @endsection
 
 @section('javascript')
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
 <script src="/js/app/controllers/wikiController.js"></script>
 <script src="/js/app/directives/wikiDirective.js"></script>
 @endsection

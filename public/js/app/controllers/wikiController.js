@@ -1,4 +1,4 @@
-angular.module('wikiApp', [])
+angular.module('wikiApp', ['ngSanitize'])
 .controller('MainCtrl', ['$http', function($http) {
     var self = this;
 
@@ -21,7 +21,7 @@ angular.module('wikiApp', [])
     fetchCourses();
 
     self.wiki = {name: 'Welcome to Imperial Physics Wiki',
-                 description:'Select your course on the left tab.',
+                 html_description:'Select your course on the left tab.',
                  welcome: 'true'};
 
     var fetchCourseNotes = function(course_id) {
@@ -75,25 +75,29 @@ angular.module('wikiApp', [])
         }, function(errResponse) {
             console.error('Error while fetching unique questions');
         }).then(function() {
-            if (self.pastPapers.length > 0) {
-                $http.get('/api/answers/' + paper_id).then(function(response) {
-                    self.answers = response.data;    
-                
-                }, function(errResponse) {
-                    console.error('Error while fetching answers');
-                    });
-                };
+            $http.get('/api/answers/' + paper_id).then(function(response) {
+                self.answers = response.data;    
+            
+            }, function(errResponse) {
+                console.error('Error while fetching answers');
+                });
             });
         };
     
 
-    self.fetchWiki = function(course) {
-            self.wiki = course;
-                        
-            fetchCourseNotes(course.id);
-            fetchUsefulLinks(course.id);
-            fetchPastPapers(course.id);
-        };
+    self.fetchWiki = function(course_id) {
+            $http.get('/api/courses/' + course_id).then(function(response) {
+                self.wiki = angular.copy(response.data[0]);
+                self.wiki.html_description = '<p>' + self.wiki.description.replace(/\n([ \t]*\n)+/g, '</p><p>')
+                .replace('\n', '<br />') + '</p>';
+                console.log(self.wiki.html_description);
+                }).then(function() {
+                    fetchCourseNotes(course_id);
+                    fetchUsefulLinks(course_id);
+                    fetchPastPapers(course_id);
+                }, function(errResponse) {
+                    console.error('Error while fetching wiki');
+        })};
 
     self.newCourseForm = function() {
             $('#myNewCourseForm').modal('show');
@@ -112,43 +116,36 @@ angular.module('wikiApp', [])
         };
 
     self.editDescriptionForm = function() {
-            self.EditDescription = self.wiki;
+            self.EditDescription = angular.copy(self.wiki);
             $('#myEditDescriptionForm').modal('show');
         };
 
-    self.editDescription = function(index) {
-        $http.put('/api/courses/' + index, {
-                    description:self.EditDescription.description,
-                }).then(self.EditDescription='').then(self.fetchWiki(self.wiki)).then($('#myEditDescriptionForm').modal('hide'))    
+    self.editDescription = function(course_id) {
+        // Fetch current course data from database
+        $http.get('/api/courses/' + course_id).then(function(response) {
+            self.current_course = response.data[0];
+            }, function(errResponse) {
+            console.error('Error while fetching courses');
+            }).then(function() {
+                if (self.wiki.description != self.current_course.description) {
+                    self.current_course.html_description = '<p>' + self.current_course.description.replace(/\n([ \t]*\n)+/g, '</p><p>')
+                    .replace('\n', '<br />') + '</p>';
+                    self.EditDescription.error = "Wiki content has changed, please revise your edit!";
+                    } else {
+                        updateDescription(course_id);
+                    }
+                }
+            );
         };
 
-    
-   
-    // self.NewSponsor = {
-    //     logo: "/images/sponsors/",
-    // };
-    
-    // self.newSponsor = function() {
-    //     $http.post('/api/sponsors', {
-    //         name: self.NewSponsor.name,
-    //         url: self.NewSponsor.url,
-    //         description: self.NewSponsor.description,
-    //         logo: self.NewSponsor.logo
-    //     }).then(self.NewSponsor='').then(fetchSponsors)
-    // };
-    
-    // self.editSponsor = function(sponsor) {
-    //     self.EditForm = sponsor;
-    //     $('#myEditForm').modal('show');
-    // }
-
-    // self.updateSponsor = function(index) {
-    //     $http.put('/api/sponsors/' + index, {
-    //         name: self.EditForm.name,
-    //         url: self.EditForm.url,
-    //         description: self.EditForm.description,
-    //         logo: self.EditForm.logo
-    //     }).then(fetchSponsors).then($('#myEditForm').modal('hide'))
-    // }
+    var updateDescription = function(course_id) {
+        $http.put('/api/courses/' + course_id, {
+                description:self.EditDescription.description,
+                }).then(function() {
+                    self.fetchWiki(course_id);
+                    self.EditDescription='';
+                    $('#myEditDescriptionForm').modal('hide');    
+                });
+        };
 }]);
 

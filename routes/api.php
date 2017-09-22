@@ -22,7 +22,7 @@ Route::get('events_all', 'EventsController@index_all');
 Route::resource('sponsors', 'SponsorController', ['except' => ['show','edit','create']]);
 Route::resource('committee', 'CommitteeController');
 Route::resource('categories', 'CategoryController');
-Route::resource('courses', 'CourseController', ['only' => ['index','store','update']]);
+Route::resource('courses', 'CourseController', ['except' => ['destroy','edit','create']]);
 Route::resource('usefullinks', 'UsefulLinkController');
 Route::resource('coursenotes', 'CourseNoteController');
 Route::resource('pastpapers', 'PastPaperController');

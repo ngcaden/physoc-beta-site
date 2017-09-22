@@ -45,4 +45,15 @@ class CourseController extends Controller
         $course->description = $request->input('description');
         $course->save();
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function show($id)
+     {
+         return Course::where('id', $id)->get();
+     }
 }
