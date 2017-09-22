@@ -79,7 +79,7 @@
                     <label for="category" class="control-label col-sm-3" >* Category:</label>
                         
                     <div class="col-sm-9">
-                        <select type='text' ng-model='ctrl.NewEvent.category' 
+                        <select type='number' ng-model='ctrl.NewEvent.category' 
                                             id="category" 
                                             class="form-control" 
                                             ng-options="c.id as c.category for c in ctrl.categories"

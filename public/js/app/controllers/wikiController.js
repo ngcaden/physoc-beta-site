@@ -21,16 +21,8 @@ angular.module('wikiApp', [])
     fetchCourses();
 
     self.wiki = {name: 'Welcome to Imperial Physics Wiki',
-                 description:'Select your course on the left tab.'};
-
-    self.fetchWiki = function(course) {
-        self.wiki = course;
-                    
-        fetchCourseNotes(course.id);
-        fetchUsefulLinks(course.id);
-        fetchPastPapers(course.id);
-        self.fetchAnswers();
-        };
+                 description:'Select your course on the left tab.',
+                 welcome: 'true'};
 
     var fetchCourseNotes = function(course_id) {
         $http.get('/api/uniquesets/' + course_id).then(function(response) {
@@ -70,39 +62,68 @@ angular.module('wikiApp', [])
                 };
             }, function(errResponse) {
                 console.error('Error while fetching past papers');
+            }).then(function() {
+                if (self.pastPapers.length > 0) {
+                    self.fetchAnswers(self.pastPapers[0].id);
+                };
             });
         };
 
-    self.fetchAnswers = function() {
-        self.questions = [
-            {id: 1, question:'1', course_id: 11},
-            {id: 2, question:'2', course_id: 11},
-        ];
-
-        self.answers = [
-            {id:1, question: 1, body: 'ii. Answer to 1ii'},
-            {id:2, question: 1, body: 'i. Answer to 1i'},
-            {id:3, question: 2, body: 'i. Answer to 2i'}
-        ];
-    };
-    // self.fetchCourse();
-    // self.sponsors = [];
+    self.fetchAnswers = function(paper_id) {
+        $http.get('/api/unique_questions/' + paper_id).then(function(response) {
+            self.questions = response.data;
+        }, function(errResponse) {
+            console.error('Error while fetching unique questions');
+        }).then(function() {
+            if (self.pastPapers.length > 0) {
+                $http.get('/api/answers/' + paper_id).then(function(response) {
+                    self.answers = response.data;    
+                
+                }, function(errResponse) {
+                    console.error('Error while fetching answers');
+                    });
+                };
+            });
+        };
     
-    // var fetchSponsors = function() {
-    //         return $http.get('/api/sponsors').then(function(response) {
-    //         self.sponsors = response.data;
-    //     }, function(errResponse) {
-    //         console.error('Error while fetching sponsors');
-    //     });
-    // };
 
-    // fetchSponsors();
+    self.fetchWiki = function(course) {
+            self.wiki = course;
+                        
+            fetchCourseNotes(course.id);
+            fetchUsefulLinks(course.id);
+            fetchPastPapers(course.id);
+        };
 
-    // self.deleteSponsor = function(index) {
-    //     $http.delete('/api/sponsors/' + index)
-    //         .then(fetchSponsors);
-    // };
+    self.newCourseForm = function() {
+            $('#myNewCourseForm').modal('show');
+            self.NewCourse = {
+                year: 1
+            };
+        };
+
+    self.newCourse = function() {
+        $http.post('/api/courses', {
+                    name: self.NewCourse.name,
+                    year: self.NewCourse.year,
+                    description: self.NewCourse.description,
+                }).then(self.NewCourse='').then(fetchCourses)
+                .then($('#myNewCourseForm').modal('hide'))
+        };
+
+    self.editDescriptionForm = function() {
+            self.EditDescription = self.wiki;
+            $('#myEditDescriptionForm').modal('show');
+        };
+
+    self.editDescription = function(index) {
+        $http.put('/api/courses/' + index, {
+                    description:self.EditDescription.description,
+                }).then(self.EditDescription='').then(self.fetchWiki(self.wiki)).then($('#myEditDescriptionForm').modal('hide'))    
+        };
+
     
+   
     // self.NewSponsor = {
     //     logo: "/images/sponsors/",
     // };

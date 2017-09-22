@@ -77,9 +77,14 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($paper_id)
     {
-        //
+        return Answer::where('paper_id', $paper_id)->get();
+    }
+
+    public function showUniqueQuestions($paper_id)
+    {
+        return Answer::where('paper_id', $paper_id)->select(['question'])->distinct()->orderBy('question','ASC')->get();
     }
 
     /**

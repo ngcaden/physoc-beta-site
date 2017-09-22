@@ -51,7 +51,7 @@ class CourseNoteController extends Controller
 
     public function showUniqueSets($course_id)
     {
-        return CourseNote::where('course_id', $course_id)->select(['set'])->distinct()->get(['id','set']);
+        return CourseNote::where('course_id', $course_id)->select(['set'])->distinct()->get();
     }
 
     /**

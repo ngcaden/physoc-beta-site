@@ -109,7 +109,7 @@
                 </div><!-- .panel-group -->
             </div><!-- .well -->
             
-            <!-- Button trigger modal -->
+            <!-- Edit Sponsor modal -->
             <div class="modal fade" id="myEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

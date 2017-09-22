@@ -1,5 +1,5 @@
 angular.module('postApp', [])
-    .controller('ListCtrl', ['$http', '$filter', 'lr.upload', function($http, $filter) {
+    .controller('ListCtrl', ['$http', '$filter', function($http, $filter) {
         var self = this;
 
         self.events = [];
@@ -68,7 +68,7 @@ angular.module('postApp', [])
         self.editPost = function(event) {
             self.editForm = event;
             $('#myEditForm').modal('show');
-        }
+        };
 
         self.updateEvent = function(index) {
             $http.put('/api/events/' + index, {
@@ -81,6 +81,6 @@ angular.module('postApp', [])
                 body: self.editForm.body,
                 link: self.editForm.link
             }).then(fetchEvents).then($('#myEditForm').modal('hide'))
-        }
+        };
     }]);
 

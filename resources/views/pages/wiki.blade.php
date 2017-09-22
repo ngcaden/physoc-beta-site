@@ -27,8 +27,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- .card -->
+                </div><!-- .panel-group -->
+
+                <!-- Add New Subject -->
+                <a ng-click="ctrl.newCourseForm()" href>
+                    Add New Course
+                </a>
+            </div><!-- .well -->
         </div><!-- .col-sm-3 -->
 
         <div class="col-sm-9">
@@ -44,15 +49,21 @@
                             </button>
                         </form>
                     </span>
-                </span>
                 </h3>  
                 <hr>
                 
                 <!-- Description -->
                 <p>
                     <span ng-bind="ctrl.wiki.description"></span>
-                </p> 
-               </h5>
+                </p>
+
+                <p ng-hide="ctrl.wiki.welcome">
+                    <!-- Edit Description -->
+                    <a ng-click="ctrl.editDescriptionForm()" href>
+                        Edit Description
+                    </a> 
+                </p>
+                &nbsp
 
                 <!-- Notes -->
                 <div class="dropdownbox">
@@ -74,7 +85,6 @@
                             <div class="tab-pane" ng-repeat="uniqueSet in ctrl.uniqueSets" 
                                                   id="set@{{uniqueSet.id}}"
                                                   ng-class="{active: uniqueSet.id == 0}">
-
                                     &nbsp
                                     <ul>
                                         <li ng-repeat="note in ctrl.courseNotes | filter: {set:uniqueSet.set}">
@@ -117,7 +127,7 @@
                         <ul class="nav nav-tabs">
                             <li ng-repeat="paper in ctrl.pastPapers" 
                                 ng-class="{active: paper.year_id == 0}">
-                                <a ng-href="#paper@{{paper.id}}" data-toggle="tab" ng-click="ctrl.fetchAnswers()">
+                                <a ng-href="#paper@{{paper.id}}" data-toggle="tab" ng-click="ctrl.fetchAnswers(paper.id)">
                                     <span ng-bind="paper.year"></span>
                                 </a>
                             </li>
@@ -130,20 +140,127 @@
                                 &nbsp
                                 <p><a ng-href="@{{paper.url}}">Download the PDF version of the paper here</a></p>
                                 <div ng-repeat="question in ctrl.questions">
-                                    <h5>Question <span ng-bind="question.question"></h5>
+                                    <h5>Question <span ng-bind="question.question"></span></h5>
                                     <div ng-repeat="answer in ctrl.answers | filter: {question: question.question}">
                                         <p ng-bind="answer.body"></p>
                                     </div>
                                 </div>
+                            </div><!-- .tab-pane -->
+                        </div><!-- .tab-content -->
+                    </div><!-- .collapse -->
+                </div><!-- .dropdownbox -->
+            </div><!-- .card-wiki -->
+        </div><!-- .col-sm-9 -->
+       
+        <!-- New Couse Modal -->
+        <div class="modal fade" id="myNewCourseForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add New Couse</h4>
+                    </div>
+                    <form ng-submit="ctrl.newCourse()" class="form-horizontal" 
+                                name="newCourseForm" novalidate>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name" class="control-label col-sm-3">* Name:</label> 
+                                <div class="col-sm-9">
+                                    <input type='text' ng-model='ctrl.NewCourse.name' 
+                                                       id="name"
+                                                       class="form-control"
+                                                       placeholder="Add course name"
+                                                       required>
+                                    </input>                                   
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    </div>
+
+                            <div class="form-group">
+                                <label for="year" class="control-label col-sm-3">* Year:</label>
+
+                                <div class="col-sm-9">
+                                    <select type='number' ng-model='ctrl.NewCourse.year' 
+                                                          id="year" 
+                                                          class="form-control" 
+                                                          ng-options="c.year_id as c.name for c in ctrl.years"
+                                                          required>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="control-label col-sm-3">Description:</label> 
+                                <div class="col-sm-9">
+                                    <textarea ng-model='ctrl.NewCourse.description' 
+                                                        id="description"
+                                                        class="form-control"
+                                                        rows="10">
+                                    </textarea>                                   
+                                </div>
+                            </div>
+                                        
+                        </div><!-- .modal-body -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-primary" 
+                                                value="Add New Course"
+                                                ng-disabled="newCourseForm.$invalid"></input>
+                        </div><!-- .modal-footer -->
+                    </form>
                 </div>
             </div>
-        </div><!-- .col-sm-9 -->
-    </div>
+        </div><!-- Modal -->
 
+        <!-- Edit Description Modal -->
+        <div class="modal fade" id="myEditDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Course Description</h4>
+                    </div>
+                    <form ng-submit="ctrl.editDescription(ctrl.EditDescription.id)" class="form-horizontal" 
+                                name="editDescriptionForm" novalidate>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name" class="control-label col-sm-3">Name:</label> 
+                                <div class="col-sm-9">
+                                    <p ng-bind="ctrl.EditDescription.name" id="name"
+                                       class="form-control-static"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="year" class="control-label col-sm-3">Year:</label>
+                                <div class="col-sm-9">
+                                    <p ng-bind="ctrl.EditDescription.year" id="year"
+                                       class="form-control-static"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="control-label col-sm-3">Description:</label> 
+                                <div class="col-sm-9">
+                                    <textarea ng-model='ctrl.EditDescription.description' 
+                                                        id="description"
+                                                        class="form-control"
+                                                        rows="10">
+                                    </textarea>                                   
+                                </div>
+                            </div>
+                                        
+                        </div><!-- .modal-body -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-primary" 
+                                                value="Save Changes"
+                                                ng-disabled="editDescriptionForm.$invalid"></input>
+                        </div><!-- .modal-footer -->
+                    </form>
+                </div>
+            </div>
+        </div><!-- Modal -->
+    </div><!-- .row -->
 @endsection
 
 @section('javascript')

@@ -15,12 +15,24 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('wiki_id')->unsigned();
+            $table->integer('paper_id')->unsigned();
             $table->integer('question')->unsigned();
             $table->text('body');
-            $table->text('contributor');
             $table->timestamps();
         });
+
+        DB::table('answers')->insert(['paper_id' => '1', 
+                                      'question' => '1', 
+                                      'body' => 'i. EM 2016 Test Solution']);
+        DB::table('answers')->insert(['paper_id' => '2', 
+                                      'question' => '2', 
+                                      'body' => 'i. EM 2015 Test Solution']);
+        DB::table('answers')->insert(['paper_id' => '3', 
+                                      'question' => '1', 
+                                      'body' => 'i. Electronics 2016 Test Solution']);
+        DB::table('answers')->insert(['paper_id' => '2', 
+                                      'question' => '1', 
+                                      'body' => 'i. EM 2015 Test Solution']);                                      
     }
 
     /**
