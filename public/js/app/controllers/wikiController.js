@@ -1,5 +1,5 @@
-angular.module('wikiApp', ['ngSanitize'])
-.controller('MainCtrl', ['$http', function($http) {
+angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
+.controller('MainCtrl', ['$http', 'Upload', function($http, Upload) {
     var self = this;
 
     self.years = [
@@ -90,7 +90,6 @@ angular.module('wikiApp', ['ngSanitize'])
                 self.wiki = angular.copy(response.data[0]);
                 self.wiki.html_description = '<p>' + self.wiki.description.replace(/\n([ \t]*\n)+/g, '</p><p>')
                 .replace('\n', '<br />') + '</p>';
-                console.log(self.wiki.html_description);
                 }).then(function() {
                     fetchCourseNotes(course_id);
                     fetchUsefulLinks(course_id);
@@ -111,7 +110,7 @@ angular.module('wikiApp', ['ngSanitize'])
                     name: self.NewCourse.name,
                     year: self.NewCourse.year,
                     description: self.NewCourse.description,
-                }).then(self.NewCourse='').then(fetchCourses)
+                }).then(fetchCourses)
                 .then($('#myNewCourseForm').modal('hide'))
         };
 
@@ -147,5 +146,27 @@ angular.module('wikiApp', ['ngSanitize'])
                     $('#myEditDescriptionForm').modal('hide');    
                 });
         };
+
+    self.addNotesForm = function() {
+            $('#myAddNotesForm').modal('show');
+            self.NewNotes= {set: self.uniqueSets[0].set};
+        };
+
+    self.addNotes = function(notes) {
+        notes.upload = Upload.upload({
+            url: '/api/coursenotes',
+            data: {notes: notes,
+                   course_id: self.wiki.id,
+                   name: self.NewNotes.name,
+                   set: self.NewNotes.set
+            }
+        });
+
+        notes.upload.then(function() {
+            self.fetchWiki(self.wiki.id);
+            $('#myAddNotesForm').modal('hide');
+        });
+    }
+
 }]);
 

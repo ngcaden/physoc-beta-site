@@ -57,8 +57,8 @@
                     <span ng-bind-html="ctrl.wiki.html_description"></span>
                 </p>
 
+                <!-- Edit Description -->
                 <p ng-hide="ctrl.wiki.welcome">
-                    <!-- Edit Description -->
                     <a ng-click="ctrl.editDescriptionForm()" href>
                         Edit Description
                     </a> 
@@ -88,7 +88,7 @@
                                     &nbsp
                                     <ul>
                                         <li ng-repeat="note in ctrl.courseNotes | filter: {set:uniqueSet.set}">
-                                            <a ng-href="@{{note.link}}">
+                                            <a target="_blank" ng-href="@{{note.url}}">
                                                 <span ng-bind="note.name"></span>
                                             </a>
                                         </li>
@@ -96,6 +96,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <p ng-show="ctrl.courseNotes">
+                        <a ng-click="ctrl.addNotesForm()" href>
+                            Add Notes
+                        </a> 
+                    </p>
                 </div> 
                 &nbsp 
 
@@ -152,138 +158,16 @@
             </div><!-- .card-wiki -->
         </div><!-- .col-sm-9 -->
        
-        <!-- New Couse Modal -->
-        <div class="modal fade" id="myNewCourseForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add New Couse</h4>
-                    </div>
-                    <form ng-submit="ctrl.newCourse()" class="form-horizontal" 
-                                name="newCourseForm" novalidate>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name" class="control-label col-sm-3">* Name:</label> 
-                                <div class="col-sm-9">
-                                    <input type='text' ng-model='ctrl.NewCourse.name' 
-                                                       id="name"
-                                                       class="form-control"
-                                                       placeholder="Add course name"
-                                                       required>
-                                    </input>                                   
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="year" class="control-label col-sm-3">* Year:</label>
-
-                                <div class="col-sm-9">
-                                    <select type='number' ng-model='ctrl.NewCourse.year' 
-                                                          id="year" 
-                                                          class="form-control" 
-                                                          ng-options="c.year_id as c.name for c in ctrl.years"
-                                                          required>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description" class="control-label col-sm-3">Description:</label> 
-                                <div class="col-sm-9">
-                                    <textarea ng-model='ctrl.NewCourse.description' 
-                                                        id="description"
-                                                        class="form-control"
-                                                        rows="10">
-                                    </textarea>                                   
-                                </div>
-                            </div>
-                                        
-                        </div><!-- .modal-body -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-primary" 
-                                                value="Add New Course"
-                                                ng-disabled="newCourseForm.$invalid"></input>
-                        </div><!-- .modal-footer -->
-                    </form>
-                </div>
-            </div>
-        </div><!-- Modal -->
-
-        <!-- Edit Description Modal -->
-        <div class="modal fade" id="myEditDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Course Description</h4>
-                    </div>
-
-                    <form ng-submit="ctrl.editDescription(ctrl.EditDescription.id)" class="form-horizontal" 
-                                name="editDescriptionForm" novalidate>
-                        
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name" class="control-label col-sm-3">Name:</label> 
-                                <div class="col-sm-9">
-                                    <p ng-bind="ctrl.EditDescription.name" id="name"
-                                       class="form-control-static"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="year" class="control-label col-sm-3">Year:</label>
-                                <div class="col-sm-9">
-                                    <p ng-bind="ctrl.EditDescription.year" id="year"
-                                       class="form-control-static"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-9 col-sm-offset-3">
-                                    <div class="alert alert-danger text-center" role="alert" ng-show="ctrl.EditDescription.error">
-                                        <span ng-bind="ctrl.EditDescription.error"></span>
-                                    </div>
-                                </div>
-
-                                <label for="description" class="control-label col-sm-3">Description:</label> 
-                                <div class="col-sm-9">
-                                    <textarea ng-model='ctrl.EditDescription.description' 
-                                                        id="description"
-                                                        class="form-control"
-                                                        rows="10">
-                                    </textarea>                                   
-                                </div>
-                            </div>
-
-                            <div class="form-group" ng-show="ctrl.EditDescription.error">
-                                <label for="current_description" class="control-label col-sm-3">Current Version:</label> 
-                                <div class="col-sm-9">
-                                    <p ng-bind-html='ctrl.current_course.html_description' 
-                                                        id="current_description"
-                                                        class="form-control-static">
-                                    </p>                                   
-                                </div>
-                            </div>
-                                        
-                        </div><!-- .modal-body -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ctrl.fetchWiki(ctrl.wiki.id)">Cancel Edit</button>
-                            <input type="submit" class="btn btn-primary" 
-                                                value="Save Changes"
-                                                ng-disabled="editDescriptionForm.$invalid"></input>
-                        </div><!-- .modal-footer -->
-                    </form>
-                </div>
-            </div>
-        </div><!-- Modal -->
+       <!-- Forms -->
+        <div new-course-form></div>
+        <div edit-description-form></div>
+        <div add-notes-form></div>
     </div><!-- .row -->
 @endsection
 
 @section('javascript')
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+<script src="/assets/vendor/ng-file-upload/ng-file-upload.min.js"></script>
 <script src="/js/app/controllers/wikiController.js"></script>
-<script src="/js/app/directives/wikiDirective.js"></script>
+<script src="/js/app/directives/wikiFormDirective.js"></script>
 @endsection
