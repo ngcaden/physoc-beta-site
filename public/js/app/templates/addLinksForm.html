@@ -1,0 +1,46 @@
+<!-- Add Notes Modal -->
+<div class="modal fade" id="myAddLinksForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add New <span ng-bind="ctrl.wiki.name"></span> Links</h4>
+            </div>
+            <form ng-submit="ctrl.addNotes(ctrl.NewNotes.notes)" class="form-horizontal" 
+                        name="addLinksForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-3">* Name:</label> 
+                        <div class="col-sm-9">
+                            <input type='text' ng-model='ctrl.NewLink.name' 
+                                               id="name"
+                                               class="form-control"
+                                               placeholder="Add useful link name"
+                                               maxlength="64"
+                                               required>
+                            </input>                                   
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="set" class="control-label col-sm-3">* URL:</label>
+
+                        <div class="col-sm-9">
+                            <input  type='url' ng-model='ctrl.NewLink.url' 
+                                    id="link" 
+                                    class="form-control"
+                                    placeholder="http://www.usefullink.com">
+                            </input>
+                        </div>
+                    </div>
+                </div><!-- .modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-primary" 
+                                        value="Add Useful Link"
+                                        ng-disabled="addLinksForm.$invalid"></input>
+                </div><!-- .modal-footer -->
+            </form>
+        </div>
+    </div>
+</div><!-- Modal -->

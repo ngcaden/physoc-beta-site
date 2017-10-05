@@ -34,7 +34,7 @@
                                 class="form-control"
                                 ng-pattern="/^[0-9\-]+$/" 
                                 ng-minlength="10"
-                                ng-maxlength="10"
+                                maxlength="10"
                                 required>
                         </input>
                     </div>
@@ -43,8 +43,8 @@
                                 placeholder="Start time" 
                                 class="form-control" 
                                 ng-pattern="/^[0-9:]+$/" 
-                                ng-minlength="5"
-                                ng-maxlength="5"
+                                minlength="5"
+                                maxlength="5"
                                 required>
                         </input>
                     </div>
@@ -54,7 +54,7 @@
                                 class="form-control"
                                 ng-pattern="/^[0-9:]+$/" 
                                 ng-minlength="5" 
-                                ng-maxlength="5" 
+                                maxlength="5" 
                                 required>
                         </input>
                     </div>
@@ -68,7 +68,7 @@
                                             id="location" 
                                             class="form-control"
                                             placeholder="Include a place or address" 
-                                            ng-maxlength="64"
+                                            maxlength="64"
                                             required>
                         </input>
                     </div>

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add New Couse</h4>
+                <h4 class="modal-title" id="myModalLabel">Add New <span ng-bind="ctrl.wiki.name"></span> Notes</h4>
             </div>
             <form ng-submit="ctrl.addNotes(ctrl.NewNotes.notes)" class="form-horizontal" 
                         name="addNotesForm" novalidate>
@@ -16,6 +16,7 @@
                                                id="name"
                                                class="form-control"
                                                placeholder="Add notes name"
+                                               maxlength="64"
                                                required>
                             </input>                                   
                         </div>
@@ -25,12 +26,12 @@
                         <label for="set" class="control-label col-sm-3">* Notes Set:</label>
 
                         <div class="col-sm-9">
-                            <select type='number' ng-model='ctrl.NewNotes.set' 
-                                                  id="set" 
-                                                  class="form-control" 
-                                                  ng-options="c.set as c.set for c in ctrl.uniqueSets"
-                                                  placeholder="New Set"
-                                                  required>
+                            <select ng-model='ctrl.NewNotes.set' 
+                                    id="set" 
+                                    class="form-control" 
+                                    ng-options="c.set as c.set for c in ctrl.uniqueSets"
+                                    placeholder="New Set"
+                                    required>
                             </select>
                         </div>
                     </div>
@@ -49,14 +50,16 @@
 
                     
                     <div class="form-group">
-                        <label for="notes" class="control-label col-sm-3">Upload Notes:</label> 
+                        <label for="notes" class="control-label col-sm-3">* Upload Notes:</label> 
                                 
                         <div class="col-sm-9">
                             <input type="file" ngf-select 
                                                ng-model="ctrl.NewNotes.notes" 
                                                name="file"
                                                id="notes"    
-                                               />                                 
+                                               ngf-pattern="'image/*,application/pdf'"
+                                               required>
+                        </input>                                 
                         </div>
                     </div>
                 </div><!-- .modal-body -->

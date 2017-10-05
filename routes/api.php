@@ -23,7 +23,7 @@ Route::resource('sponsors', 'SponsorController', ['except' => ['show','edit','cr
 Route::resource('committee', 'CommitteeController');
 Route::resource('categories', 'CategoryController');
 Route::resource('courses', 'CourseController', ['except' => ['destroy','edit','create']]);
-Route::resource('usefullinks', 'UsefulLinkController');
+Route::resource('usefullinks', 'UsefulLinkController', ['except' => ['destroy','edit','create']]);
 Route::resource('coursenotes', 'CourseNoteController', ['except' => ['create', 'edit', 'destroy']]);
 Route::resource('pastpapers', 'PastPaperController');
 Route::get('uniquesets/{course_id}', 'CourseNoteController@showUniqueSets')->where('course_id', '[\d]+');

@@ -18,16 +18,6 @@ class UsefulLinkController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +25,19 @@ class UsefulLinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usefullink = new UsefulLink;
+        
+        $this->validate($request, array(
+            'name' => 'required|max:64',
+            'course_id' => 'required|numeric',
+            'url' => 'required|url'
+        ));
+        
+        $usefullink->name = $request->input('name');
+        $usefullink->course_id = $request->input('course_id');
+        $usefullink->url = $request->input('url');
+    
+        $usefullink->save();
     }
 
     /**
@@ -47,17 +49,6 @@ class UsefulLinkController extends Controller
     public function show($course_id)
     {
         return UsefulLink::where('course_id', $course_id)->get();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

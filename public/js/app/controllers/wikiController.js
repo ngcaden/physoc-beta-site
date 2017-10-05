@@ -31,16 +31,15 @@ angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
                 // Adding id for uniqueSets
                 for (i = 0; i < self.uniqueSets.length; i++) { 
                     (self.uniqueSets[i])['id'] = i;
-            }
-            
+                }   
             }, function(errResponse) {
                 console.error('Error while fetching unique sets');
                 }).then(function() {
                     $http.get('/api/coursenotes/' + course_id).then(function(response) {
-                            self.courseNotes = response.data;
-                        }, function(errResponse) {
-                            console.error('Error while fetching course notes');
-                        });
+                        self.courseNotes = response.data;
+                    }, function(errResponse) {
+                        console.error('Error while fetching course notes');
+                    });
             });
         };
 
@@ -86,17 +85,17 @@ angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
     
 
     self.fetchWiki = function(course_id) {
-            $http.get('/api/courses/' + course_id).then(function(response) {
-                self.wiki = angular.copy(response.data[0]);
-                self.wiki.html_description = '<p>' + self.wiki.description.replace(/\n([ \t]*\n)+/g, '</p><p>')
-                .replace('\n', '<br />') + '</p>';
-                }).then(function() {
-                    fetchCourseNotes(course_id);
-                    fetchUsefulLinks(course_id);
-                    fetchPastPapers(course_id);
-                }, function(errResponse) {
-                    console.error('Error while fetching wiki');
-        })};
+        $http.get('/api/courses/' + course_id).then(function(response) {
+            self.wiki = angular.copy(response.data);
+            self.wiki.html_description = '<p>' + self.wiki.description.replace(/\n([ \t]*\n)+/g, '</p><p>')
+            .replace('\n', '<br />') + '</p>';
+        }).then(fetchCourseNotes(course_id))
+        .then(fetchUsefulLinks(course_id))
+        .then(fetchPastPapers(course_id)
+        , function(errResponse) {
+            console.error('Error while fetching wiki');
+        })
+    };
 
     self.newCourseForm = function() {
             $('#myNewCourseForm').modal('show');
@@ -122,7 +121,7 @@ angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
     self.editDescription = function(course_id) {
         // Fetch current course data from database
         $http.get('/api/courses/' + course_id).then(function(response) {
-            self.current_course = response.data[0];
+            self.current_course = response.data;
             }, function(errResponse) {
             console.error('Error while fetching courses');
             }).then(function() {
@@ -148,9 +147,9 @@ angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
         };
 
     self.addNotesForm = function() {
-            $('#myAddNotesForm').modal('show');
-            self.NewNotes= {set: self.uniqueSets[0].set};
-        };
+        $('#myAddNotesForm').modal('show');
+        self.NewNotes= {set: self.uniqueSets[0].set};
+    }
 
     self.addNotes = function(notes) {
         notes.upload = Upload.upload({
@@ -167,6 +166,26 @@ angular.module('wikiApp', ['ngSanitize','ngFileUpload'])
             $('#myAddNotesForm').modal('hide');
         });
     }
+
+    self.addLinksForm = function() {
+        $('#myAddLinksForm').modal('show');
+    }
+
+    self.addLinks = function(notes) {
+        notes.upload = Upload.upload({
+            url: '/api/usefullinks',
+            data: {notes: notes,
+                course_id: self.wiki.id,
+                name: self.NewLink.name,
+                url: self.NewLink.url
+        }
+    });
+
+    notes.upload.then(function() {
+        self.fetchWiki(self.wiki.id);
+        $('#myAddNotesForm').modal('hide');
+    });
+}
 
 }]);
 

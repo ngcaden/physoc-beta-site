@@ -54,6 +54,6 @@ class CourseController extends Controller
      */
      public function show($id)
      {
-         return Course::where('id', $id)->get();
+         return Course::where('id', $id)->first();
      }
 }

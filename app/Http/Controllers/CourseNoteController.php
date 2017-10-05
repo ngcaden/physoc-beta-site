@@ -29,16 +29,12 @@ class CourseNoteController extends Controller
     {
         $coursenotes = new CourseNote;
         
-        // $this->validate($request, array(
-        //     'name' => 'required|max:255',
-        //     'slug' => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
-        //     'category_id' => 'required|numeric',
-        //     'featured_image' => 'sometimes|image',
-        //     'body' => 'required',
-        //     'location' => 'required|max:255',
-        //     'time' => 'required|date',
-        //     'duration' => 'sometimes|max:255',
-        // ));
+        $this->validate($request, array(
+            'name' => 'required|max:64',
+            'set' => "required",
+            'course_id' => 'required',
+            'notes' => 'sometimes|mimes:image/*,pdf'
+        ));
         
         $coursenotes->name = $request->input('name');
         $coursenotes->set = $request->input('set');

@@ -16,4 +16,10 @@ angular.module('wikiApp')
             templateUrl: '/js/app/templates/addNotesForm.html',
             restrict: 'A'
         };
+    }])
+    .directive('addLinksForm', [function() {
+        return {
+            templateUrl: '/js/app/templates/addLinksForm.html',
+            restrict: 'A'
+        };
     }]);

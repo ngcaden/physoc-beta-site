@@ -95,13 +95,15 @@
                                     </ul>
                             </div>
                         </div>
-                    </div>
 
-                    <p ng-show="ctrl.courseNotes">
-                        <a ng-click="ctrl.addNotesForm()" href>
-                            Add Notes
-                        </a> 
-                    </p>
+                        &nbsp
+
+                        <p ng-show="ctrl.courseNotes">
+                            <a ng-click="ctrl.addNotesForm()" href>
+                                Add Notes
+                            </a> 
+                        </p>
+                    </div>  
                 </div> 
                 &nbsp 
 
@@ -120,6 +122,15 @@
                             </li>
                         </ul>
                     </div>
+
+                    &nbsp
+
+                    <p ng-show="ctrl.usefulLinks">
+                        <a ng-click="ctrl.addLinksForm()" href>
+                            Add Useful Links
+                        </a> 
+                    </p>
+
                 </div> 
                 &nbsp 
 
@@ -162,6 +173,8 @@
         <div new-course-form></div>
         <div edit-description-form></div>
         <div add-notes-form></div>
+        <div add-links-form></div>
+        <div add-past-papers-form></div>
     </div><!-- .row -->
 @endsection
 
