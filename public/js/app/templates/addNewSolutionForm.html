@@ -1,0 +1,55 @@
+<!-- Edit Solution Modal -->
+<div class="modal fade" id="myNewSolutionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add New Solution</h4>
+            </div>
+
+            <form ng-submit="ctrl.addSolution()" class="form-horizontal" 
+                        name="newSolutionForm" novalidate>
+                
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="course" class="control-label col-sm-3">Course:</label> 
+                        <div class="col-sm-9">
+                            <p ng-bind="ctrl.wiki.name" id="course"
+                               class="form-control-static"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="year" class="control-label col-sm-3">Paper:</label> 
+                        <div class="col-sm-9">
+                            <p ng-bind="ctrl.Solution.year" id="year"
+                               class="form-control-static"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link" class="control-label col-sm-3">Solution:</label> 
+                        <div class="col-sm-9">
+                            <input type='url' ng-model='ctrl.Solution.link' 
+                                            id="link"
+                                            placeholder="http://www.solutionlink.com"
+                                            class="form-control"
+                                            required>
+                        </input>                                   
+                        </div>
+                    </div>
+
+                                
+                </div><!-- .modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ctrl.fetchWiki(ctrl.wiki.id)">Cancel Edit</button>
+                    <input type="submit" class="btn btn-primary" 
+                                        value="Add Solution"
+                                        ng-disabled="newSolutionForm.$invalid"></input>
+                </div><!-- .modal-footer -->
+            </form>
+        </div>
+    </div>
+</div><!-- Modal -->
+

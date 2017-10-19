@@ -1,4 +1,4 @@
-<!-- Add Notes Modal -->
+<!-- Add Links Modal -->
 <div class="modal fade" id="myAddLinksForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Add New <span ng-bind="ctrl.wiki.name"></span> Links</h4>
             </div>
-            <form ng-submit="ctrl.addNotes(ctrl.NewNotes.notes)" class="form-horizontal" 
+            <form ng-submit="ctrl.addLinks()" class="form-horizontal" 
                         name="addLinksForm" novalidate>
                 <div class="modal-body">
                     <div class="form-group">
@@ -29,7 +29,8 @@
                             <input  type='url' ng-model='ctrl.NewLink.url' 
                                     id="link" 
                                     class="form-control"
-                                    placeholder="http://www.usefullink.com">
+                                    placeholder="http://www.usefullink.com"
+                                    required>
                             </input>
                         </div>
                     </div>

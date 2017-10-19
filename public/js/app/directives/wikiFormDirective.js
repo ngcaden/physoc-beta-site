@@ -22,4 +22,22 @@ angular.module('wikiApp')
             templateUrl: '/js/app/templates/addLinksForm.html',
             restrict: 'A'
         };
+    }])
+    .directive('addPastPapersForm', [function() {
+        return {
+            templateUrl: '/js/app/templates/addPastPapersForm.html',
+            restrict: 'A'
+        };
+    }])
+    .directive('addNewSolutionForm', [function() {
+        return {
+            templateUrl: '/js/app/templates/addNewSolutionForm.html',
+            restrict: 'A'
+        };
+    }])
+    .directive('showSolutionGuide', [function() {
+        return {
+            templateUrl: '/js/app/templates/solutionGuide.html',
+            restrict: 'A'
+        };
     }]);

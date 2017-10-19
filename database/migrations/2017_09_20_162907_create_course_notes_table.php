@@ -17,7 +17,7 @@ class CreateCourseNotesTable extends Migration
             $table->increments('id');
             $table->integer('course_id')->unsigned();
             $table->string('name');
-            $table->string('url')->nullable();
+            $table->string('url');
             $table->string('set');
             $table->timestamps();
         });

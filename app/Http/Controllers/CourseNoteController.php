@@ -31,9 +31,9 @@ class CourseNoteController extends Controller
         
         $this->validate($request, array(
             'name' => 'required|max:64',
-            'set' => "required",
-            'course_id' => 'required',
-            'notes' => 'sometimes|mimes:image/*,pdf'
+            'set' => 'required',
+            'course_id' => 'required|numeric',
+            'notes' => 'required|mimes:jpeg,bmp,png,pdf'
         ));
         
         $coursenotes->name = $request->input('name');
@@ -44,12 +44,12 @@ class CourseNoteController extends Controller
             $file = $request->file('notes');
             $coursename = str_replace(" ", "-", Course::where('id', $coursenotes->course_id)->first()->name);
             $filename = $coursename . '_' . str_replace(" ", "-", $coursenotes->set) . '_' . str_replace(" ", "-", $coursenotes->name) . '.' . $file->getClientOriginalExtension();
-            $url = '/past_papers/' . $filename;
+            $url = '/wiki_resource/course_notes/' . $filename;
 
             
             $coursenotes->url = $url;
             
-            Storage::putFileAs('past_papers', $file, $filename);
+            Storage::putFileAs('/wiki_resource/course_notes', $file, $filename);
 
             $coursenotes->save();
         }

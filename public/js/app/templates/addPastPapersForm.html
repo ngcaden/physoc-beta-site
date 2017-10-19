@@ -1,0 +1,48 @@
+<!-- Add Past Papers Modal -->
+<div class="modal fade" id="myAddPastPapersForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Upload <span ng-bind="ctrl.wiki.name"></span> Past Papers</h4>
+            </div>
+            <form ng-submit="ctrl.addPastPapers(ctrl.NewPastPapers.paper)" class="form-horizontal" 
+                        name="addPastPapersForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="year" class="control-label col-sm-3">* Year:</label> 
+                        
+                        <div class="col-sm-9">
+                            <select ng-model='ctrl.NewPastPapers.year' 
+                                    id="year" 
+                                    class="form-control" 
+                                    ng-options="c for c in ctrl.PastPapersYears"
+                                    required>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paper" class="control-label col-sm-3">* Upload past paper:</label> 
+                                
+                        <div class="col-sm-9">
+                            <input type="file" ngf-select 
+                                               ng-model="ctrl.NewPastPapers.paper" 
+                                               name="file"
+                                               id="paper"    
+                                               ngf-pattern="'image/*,application/pdf'"
+                                               required>
+                        </input>                                 
+                        </div>
+                    </div>
+                </div><!-- .modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-primary" 
+                                        value="Upload"
+                                        ng-disabled="addPastPapersForm.$invalid"></input>
+                </div><!-- .modal-footer -->
+            </form>
+        </div>
+    </div>
+</div><!-- Modal -->

@@ -17,8 +17,8 @@ class PagesController extends Controller {
         return view('pages.sponsorship');
     }
 
-    public function getPosts() {
-        return view('pages.posts');
+    public function getManageEvents() {
+        return view('pages.events');
     }
 
     public function getSponsors() {
